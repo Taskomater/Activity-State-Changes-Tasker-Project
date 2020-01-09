@@ -1,0 +1,2822 @@
+<TaskerData sr="" dvi="1" tv="5.9">
+	<Profile sr="prof841" ve="2">
+		<cdate>1576896789133</cdate>
+		<clp>true</clp>
+		<edate>1578393257487</edate>
+		<flags>8</flags>
+		<id>841</id>
+		<mid0>839</mid0>
+		<nme>ActivityManager Activity Config Change Monitor</nme>
+		<Event sr="con0" ve="2">
+			<code>2085</code>
+			<pri>0</pri>
+			<Bundle sr="arg0">
+				<Vals sr="val">
+					<net.dinglisch.android.tasker.RELEVANT_VARIABLES>&lt;StringArray sr=""&gt;&lt;_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES0&gt;%lc_text
+Text
+The text that corresponds to the matched logcat entry&lt;/_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES0&gt;&lt;/StringArray&gt;</net.dinglisch.android.tasker.RELEVANT_VARIABLES>
+					<net.dinglisch.android.tasker.RELEVANT_VARIABLES-type>[Ljava.lang.String;</net.dinglisch.android.tasker.RELEVANT_VARIABLES-type>
+				</Vals>
+			</Bundle>
+			<Str sr="arg1" ve="3">ActivityManager</Str>
+			<Str sr="arg2" ve="3">ActivityManager: Config change</Str>
+		</Event>
+	</Profile>
+	<Profile sr="prof847" ve="2">
+		<cdate>1578266148686</cdate>
+		<clp>true</clp>
+		<edate>1578378214299</edate>
+		<flags>8</flags>
+		<id>847</id>
+		<mid0>852</mid0>
+		<nme>Reset Activity State Change Variables On Monitor Start</nme>
+		<Event sr="con0" ve="2">
+			<code>307</code>
+			<pri>0</pri>
+		</Event>
+	</Profile>
+	<Profile sr="prof855" ve="2">
+		<cdate>1578295763395</cdate>
+		<clp>true</clp>
+		<edate>1578413210494</edate>
+		<flags>8</flags>
+		<id>855</id>
+		<limit>true</limit>
+		<mid0>839</mid0>
+		<nme>ActivityTrigger Activity Start Monitor</nme>
+		<Event sr="con0" ve="2">
+			<code>2085</code>
+			<pri>0</pri>
+			<Bundle sr="arg0">
+				<Vals sr="val">
+					<net.dinglisch.android.tasker.RELEVANT_VARIABLES>&lt;StringArray sr=""&gt;&lt;_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES0&gt;%lc_text
+Text
+The text that corresponds to the matched logcat entry&lt;/_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES0&gt;&lt;/StringArray&gt;</net.dinglisch.android.tasker.RELEVANT_VARIABLES>
+					<net.dinglisch.android.tasker.RELEVANT_VARIABLES-type>[Ljava.lang.String;</net.dinglisch.android.tasker.RELEVANT_VARIABLES-type>
+				</Vals>
+			</Bundle>
+			<Str sr="arg1" ve="3">ActivityTrigger</Str>
+			<Str sr="arg2" ve="3">ActivityTrigger activityPauseTrigger</Str>
+		</Event>
+	</Profile>
+	<Profile sr="prof859" ve="2">
+		<cdate>1578341457397</cdate>
+		<edate>1578467034405</edate>
+		<flags>8</flags>
+		<id>859</id>
+		<mid0>860</mid0>
+		<nme>Activity State Change Command Monitor</nme>
+		<Event sr="con0" ve="2">
+			<code>3050</code>
+			<pri>0</pri>
+			<Str sr="arg0" ve="3">%ActivityStateChangeControllerCommand</Str>
+			<Str sr="arg1" ve="3"/>
+			<Int sr="arg2" val="1"/>
+		</Event>
+	</Profile>
+	<Profile sr="prof863" ve="2">
+		<cdate>1578401192742</cdate>
+		<clp>true</clp>
+		<edate>1578413212380</edate>
+		<flags>8</flags>
+		<id>863</id>
+		<mid0>839</mid0>
+		<nme>Custom Activity Start Monitor</nme>
+		<Event sr="con0" ve="2">
+			<code>2085</code>
+			<pri>0</pri>
+			<Bundle sr="arg0">
+				<Vals sr="val">
+					<net.dinglisch.android.tasker.RELEVANT_VARIABLES>&lt;StringArray sr=""&gt;&lt;_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES0&gt;%lc_text
+Text
+The text that corresponds to the matched logcat entry&lt;/_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES0&gt;&lt;/StringArray&gt;</net.dinglisch.android.tasker.RELEVANT_VARIABLES>
+					<net.dinglisch.android.tasker.RELEVANT_VARIABLES-type>[Ljava.lang.String;</net.dinglisch.android.tasker.RELEVANT_VARIABLES-type>
+				</Vals>
+			</Bundle>
+			<Str sr="arg1" ve="3">LGImageQualityEnhancementService</Str>
+			<Str sr="arg2" ve="3">activityResuming:</Str>
+		</Event>
+	</Profile>
+	<Project sr="proj0" ve="2">
+		<cdate>1578339897867</cdate>
+		<name>Activity State Changes</name>
+		<pids>841,855,859,847,863</pids>
+		<tids>839,852,864,857,854,856,853,860,858</tids>
+	</Project>
+	<Task sr="task839">
+		<cdate>1576882993943</cdate>
+		<edate>1578466976717</edate>
+		<id>839</id>
+		<nme>Activity State Change Relay</nme>
+		<pri>6</pri>
+		<rty>2</rty>
+		<Action sr="act0" ve="7">
+			<code>300</code>
+			<label>A task that should be called whenever an activity is started or resumed again or the activity's config changes like entering or exiting fullscreen mode. Ideally a "Logcat Entry" Profile Event should call this task so that the %lc_text variable can be parsed.
+
+This task should basically find the currently opened package and activity and set it to %current_package_and_activity in the format "package_name/activity_name" and also set %activity_state_change to "activity_start" or "activity_config_change". Both variables are set to "%ActivityStateChangeControllerCommand" separated by a newline so that the "Activity State Change Command Monitor" Profile can be triggered and can pass it to "Activity State Change Controller" Task to further process the activity state change and call any other required tasks for respected packages and activities. The "Activity State Change Command Monitor" Profile will also run the command tasks in order with its own queue. If new command tasks were run with "%priority - 1", then different instances of the same tasks would have run in parallel or might not run at all depending on priorities of other tasks running in tasker. If incrementally decreasing priorities were used, then other tasks in tasker would not have run if base priority was too high. A custom queue design could have been used but it's not needed since we don't care about return values of command tasks. This design is used because if the Logcat entry passed to this task does not contain the package and activity names and the Tasker "GetCurrentAppAndActivity" function or dumpsys command is used to find them, then in that case if processing an entry fully takes too long then by the time the turn comes for queued tasks, the package and/or activity might have already changed for which those Logcat entries were generated for resulting in false activity transitions being calculated. It is still best to find Logcat entries for the device and use them instead of other ways because false activity transitions will still occur in cases when this task is slow or queued because of higher priority tasks running in tasker and packages and/or activities have already changed.
+
+By default this task is started by "ActivityTrigger Activity Start Monitor", "Custom Activity Start Monitor" and "ActivityManager Activity Config Change Monitor" Profiles. Note that either "ActivityTrigger Activity Start Monitor" or "Custom Activity Start Monitor" must be activated at the same time. If they are both activated, then this can cause duplication and result in fake transitions.
+
+Check Activity State Changes Project docs to get more info on how this task should be called and what it should do.
+
+
+This task does not take any parameters or return anything.</label>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%task_name</Str>
+			<Str sr="arg1" ve="3">Activity State Change Relay</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>37</code>
+			<ConditionList sr="if">
+				<bool0>Or</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs>yes</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%errors</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act11" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">Failed To Get current_package_and_activity From dumpsys
+
+current_package_and_activity =
+"
+%current_package_and_activity
+"
+
+errors =
+"
+%errors
+"</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act12" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0"/>
+			<Str sr="arg1" ve="3"/>
+		</Action>
+		<Action sr="act13" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act14" ve="7">
+			<code>43</code>
+		</Action>
+		<Action sr="act15" ve="7">
+			<code>30</code>
+			<label>Wait needed for tasker to get updated value</label>
+			<Int sr="arg0" val="500"/>
+			<Int sr="arg1" val="0"/>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+		</Action>
+		<Action sr="act16" ve="7">
+			<code>365</code>
+			<label>Get current package and activity from from Tasker "GetCurrentAppAndActivity" function</label>
+			<se>false</se>
+			<Bundle sr="arg0">
+				<Vals sr="val">
+					<net.dinglisch.android.tasker.RELEVANT_VARIABLES>&lt;StringArray sr=""&gt;&lt;_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES0&gt;%activity
+Activity
+The class name of the activity that's currently opened. You can launch this with the Launch App action by using packageName/activityName.&lt;/_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES0&gt;&lt;_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES1&gt;%package
+Package
+Unique package name for the app&lt;/_array_net.dinglisch.android.tasker.RELEVANT_VARIABLES1&gt;&lt;/StringArray&gt;</net.dinglisch.android.tasker.RELEVANT_VARIABLES>
+					<net.dinglisch.android.tasker.RELEVANT_VARIABLES-type>[Ljava.lang.String;</net.dinglisch.android.tasker.RELEVANT_VARIABLES-type>
+				</Vals>
+			</Bundle>
+			<Str sr="arg1" ve="3">GetCurrentAppAndActivity()</Str>
+		</Action>
+		<Action sr="act17" ve="7">
+			<code>547</code>
+			<label>Set "%package/%activity" to current_package_and_activity</label>
+			<Str sr="arg0" ve="3">%current_package_and_activity</Str>
+			<Str sr="arg1" ve="3">%package/%activity</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act18" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act19" ve="7">
+			<code>43</code>
+			<label>If Activity is started which is detected by "Custom Activity Start Monitor" Profile</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%caller(1)</lhs>
+					<op>0</op>
+					<rhs>profile=enter:Custom Activity Start Monitor</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>548</code>
+			<on>false</on>
+			<Str sr="arg0" ve="3">"%lc_text"</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+		<Action sr="act20" ve="7">
+			<code>547</code>
+			<label>Set "activity_start" to activity_state_change</label>
+			<Str sr="arg0" ve="3">%activity_state_change</Str>
+			<Str sr="arg1" ve="3">activity_start</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act21" ve="7">
+			<code>547</code>
+			<label>set lc_text to current_package_and_activity</label>
+			<Str sr="arg0" ve="3">%current_package_and_activity</Str>
+			<Str sr="arg1" ve="3">%lc_text</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act22" ve="7">
+			<code>598</code>
+			<label>Get current package and activity from lc_text</label>
+			<Str sr="arg0" ve="3">%current_package_and_activity</Str>
+			<Str sr="arg1" ve="3">.*activityResuming: ([^ ]+).*</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Str sr="arg5" ve="3"/>
+			<Int sr="arg6" val="1"/>
+			<Str sr="arg7" ve="3">$1</Str>
+		</Action>
+		<Action sr="act23" ve="7">
+			<code>43</code>
+			<label>If Activity config is changed which is detected by "ActivityManager Activity Config Change Monitor" Profile</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%caller(1)</lhs>
+					<op>0</op>
+					<rhs>profile=enter:ActivityManager Activity Config Change Monitor</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act24" ve="7">
+			<code>547</code>
+			<label>Set "activity_config_change" to activity_state_change</label>
+			<Str sr="arg0" ve="3">%activity_state_change</Str>
+			<Str sr="arg1" ve="3">activity_config_change</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act25" ve="7">
+			<code>547</code>
+			<label>Set "-" to current_package_and_activity</label>
+			<Str sr="arg0" ve="3">%current_package_and_activity</Str>
+			<Str sr="arg1" ve="3">-</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act26" ve="7">
+			<code>43</code>
+		</Action>
+		<Action sr="act27" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">Logcat Entry Not Handled
+%task_name Failed.</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act28" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0"/>
+			<Str sr="arg1" ve="3"/>
+		</Action>
+		<Action sr="act29" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act3" ve="7">
+			<code>300</code>
+			<label>Set User Modifiable Variables Start</label>
+		</Action>
+		<Action sr="act30" ve="7">
+			<code>37</code>
+			<label>Add any packages and activities to ignore
+By default ignores all android internal activities or if current_package_and_activity does not contain a forwardslash "/"</label>
+			<ConditionList sr="if">
+				<bool0>Or</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%current_package_and_activity</lhs>
+					<op>4</op>
+					<rhs>^android/.*$</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%current_package_and_activity</lhs>
+					<op>3</op>
+					<rhs>*/*</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act31" ve="7">
+			<code>548</code>
+			<on>false</on>
+			<Str sr="arg0" ve="3">Ignoring current_package_and_activity = "%current_package_and_activity"</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act32" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0"/>
+			<Str sr="arg1" ve="3"/>
+		</Action>
+		<Action sr="act33" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act34" ve="7">
+			<code>547</code>
+			<label>Set %ActivityStateChangeControllerCommand To Activate "Activity State Change Command Monitor" Profile
+
+Value Set:
+"
+%current_package_and_activity
+%activity_state_change
+"</label>
+			<Str sr="arg0" ve="3">%ActivityStateChangeControllerCommand</Str>
+			<Str sr="arg1" ve="3">%current_package_and_activity
+%activity_state_change</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act4" ve="7">
+			<code>547</code>
+			<label>Enable this if you want to use root mode for some actions like finding current package and activity. Root mode is only used if Tasker in-built %ROOT variable is set to "yes"</label>
+			<Str sr="arg0" ve="3">%use_root_mode</Str>
+			<Str sr="arg1" ve="3">1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act5" ve="7">
+			<code>300</code>
+			<label>Set User Modifiable Variables End</label>
+		</Action>
+		<Action sr="act6" ve="7">
+			<code>37</code>
+			<label>If Activity is started which is detected by "ActivityTrigger Activity Start Monitor" Profile</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%caller(1)</lhs>
+					<op>0</op>
+					<rhs>profile=enter:ActivityTrigger Activity Start Monitor</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>547</code>
+			<label>Set "activity_start" to activity_state_change</label>
+			<Str sr="arg0" ve="3">%activity_state_change</Str>
+			<Str sr="arg1" ve="3">activity_start</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act8" ve="7">
+			<code>37</code>
+			<ConditionList sr="if">
+				<bool0>And</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%ROOT</lhs>
+					<op>0</op>
+					<rhs>yes</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%use_root_mode</lhs>
+					<op>0</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act9" ve="7">
+			<code>123</code>
+			<label>Get current package and activity with "dumpsys" command</label>
+			<Str sr="arg0" ve="3">dumpsys activity activities | grep mFocusedActivity | sed -E 's/.*ActivityRecord\{[^ ]+ [^ ]+ ([^ ]+) [^ ]+\}.*/\1/'</Str>
+			<Int sr="arg1" val="0"/>
+			<Int sr="arg2" val="1"/>
+			<Str sr="arg3" ve="3">%current_package_and_activity</Str>
+			<Str sr="arg4" ve="3">%errors</Str>
+			<Str sr="arg5" ve="3"/>
+		</Action>
+	</Task>
+	<Task sr="task852">
+		<cdate>1578266263845</cdate>
+		<edate>1578429926467</edate>
+		<id>852</id>
+		<nme>Reset Activity State Change Variables</nme>
+		<Action sr="act0" ve="7">
+			<code>300</code>
+			<label>A task that resets Activity States Changes Project variables.
+
+This is called by the "Reset Activity State Change Variables On Monitor Start" Profile when Tasker Monitor is started. It should ideally also be manually called when the "* Activity Start Monitor" and "* Activity Config Change Monitor" tasks are enabled/disabled. Resetting variables is required to prevent false activity transitions if activity states were stopped from being monitor either by tasker being killed or manually by the user.
+
+
+This task does not take any parameters or return anything.</label>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>549</code>
+			<Str sr="arg0" ve="3">%PreviousPackageAndActivity</Str>
+			<Int sr="arg1" val="0"/>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>549</code>
+			<Str sr="arg0" ve="3">%PreviousActivityState</Str>
+			<Int sr="arg1" val="0"/>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+		</Action>
+	</Task>
+	<Task sr="task853">
+		<cdate>1565310393511</cdate>
+		<edate>1578429923376</edate>
+		<id>853</id>
+		<nme>com.whatsapp Activity State Change Responder</nme>
+		<pri>100</pri>
+		<rty>2</rty>
+		<stayawake>true</stayawake>
+		<Action sr="act0" ve="7">
+			<code>300</code>
+			<label>A task that responds to activity state changes for all the activities of the "com.whatsapp" package and is called by the "Activity State Change Controller" Task.
+
+Check Activity State Changes Project docs to get more info on how this task is called and what it should do.
+
+
+Input %par1:
+"
+activity
+"
+
+Input %par2:
+"
+activity_transistion
+"
+
+This task does not return anything.</label>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%task_name</Str>
+			<Str sr="arg1" ve="3">com.whatsapp Activity State Change Responder</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>43</code>
+			<label>If activity_transition is set to "exit_fullscreen"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%activity_transition</lhs>
+					<op>0</op>
+					<rhs>exit_fullscreen</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act11" ve="7">
+			<code>130</code>
+			<label>Reset Screen Brightness</label>
+			<Str sr="arg0" ve="3">Fullscreen Activity Transition Screen Brightness Controller</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Str sr="arg2" ve="3">exit_fullscreen</Str>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Int sr="arg5" val="0"/>
+		</Action>
+		<Action sr="act12" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act13" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>300</code>
+			<label>Parse And Validate Parameters</label>
+		</Action>
+		<Action sr="act3" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%activity</Str>
+			<Str sr="arg1" ve="3">%par1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act4" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%activity_transition</Str>
+			<Str sr="arg1" ve="3">%par2</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act5" ve="7">
+			<code>548</code>
+			<label>Enable this if you want to flash the activities and activity_transistions passed to this task</label>
+			<on>false</on>
+			<Str sr="arg0" ve="3">%activity
+%activity_transition</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+		<Action sr="act6" ve="7">
+			<code>105</code>
+			<label>Enable this if you want to copy the activities passed to this task to the clipboard to make adding conditional statements later for it easier</label>
+			<on>false</on>
+			<Str sr="arg0" ve="3">%activity</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>37</code>
+			<label>If activity matches "*MediaView", the activity for viewing images and videos</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%activity</lhs>
+					<op>2</op>
+					<rhs>*MediaView</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act8" ve="7">
+			<code>37</code>
+			<label>If activity_transition is set to "start_fullscreen"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%activity_transition</lhs>
+					<op>0</op>
+					<rhs>start_fullscreen</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act9" ve="7">
+			<code>130</code>
+			<label>Increase Screen Brightness</label>
+			<Str sr="arg0" ve="3">Fullscreen Activity Transition Screen Brightness Controller</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Str sr="arg2" ve="3">enter_fullscreen</Str>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Int sr="arg5" val="0"/>
+		</Action>
+	</Task>
+	<Task sr="task854">
+		<cdate>1565310393511</cdate>
+		<edate>1578429916825</edate>
+		<id>854</id>
+		<nme>com.fstop.photo Activity State Change Responder</nme>
+		<pri>100</pri>
+		<rty>2</rty>
+		<stayawake>true</stayawake>
+		<Action sr="act0" ve="7">
+			<code>300</code>
+			<label>A task that responds to activity state changes for all the activities of the "com.fstop.photo" package and is called by the "Activity State Change Controller" Task.
+
+Check Activity State Changes Project docs to get more info on how this task is called and what it should do.
+
+
+Input %par1:
+"
+activity
+"
+
+Input %par2:
+"
+activity_transistion
+"
+
+This task does not return anything.</label>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%task_name</Str>
+			<Str sr="arg1" ve="3">com.fstop.photo Activity State Change Responder</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>43</code>
+			<label>If activity_transition is set to "exit_fullscreen"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%activity_transition</lhs>
+					<op>0</op>
+					<rhs>exit_fullscreen</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act11" ve="7">
+			<code>130</code>
+			<label>Reset Screen Brightness</label>
+			<Str sr="arg0" ve="3">Fullscreen Activity Transition Screen Brightness Controller</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Str sr="arg2" ve="3">exit_fullscreen</Str>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Int sr="arg5" val="0"/>
+		</Action>
+		<Action sr="act12" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act13" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>300</code>
+			<label>Parse And Validate Parameters</label>
+		</Action>
+		<Action sr="act3" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%activity</Str>
+			<Str sr="arg1" ve="3">%par1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act4" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%activity_transition</Str>
+			<Str sr="arg1" ve="3">%par2</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act5" ve="7">
+			<code>548</code>
+			<label>Enable this if you want to flash the activities and activity_transistions passed to this task</label>
+			<on>false</on>
+			<Str sr="arg0" ve="3">%activity
+%activity_transition</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+		<Action sr="act6" ve="7">
+			<code>105</code>
+			<label>Enable this if you want to copy the activities passed to this task to the clipboard to make adding conditional statements later for it easier</label>
+			<on>false</on>
+			<Str sr="arg0" ve="3">%activity</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>37</code>
+			<label>If activity matches "*activity.ViewImageActivity", the activity for viewing images</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%activity</lhs>
+					<op>2</op>
+					<rhs>*activity.ViewImageActivity</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act8" ve="7">
+			<code>37</code>
+			<label>If activity_transition is set to "start_fullscreen"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%activity_transition</lhs>
+					<op>0</op>
+					<rhs>start_fullscreen</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act9" ve="7">
+			<code>130</code>
+			<label>Increase Screen Brightness</label>
+			<Str sr="arg0" ve="3">Fullscreen Activity Transition Screen Brightness Controller</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Str sr="arg2" ve="3">enter_fullscreen</Str>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Int sr="arg5" val="0"/>
+		</Action>
+	</Task>
+	<Task sr="task856">
+		<cdate>1565310393511</cdate>
+		<edate>1578425154013</edate>
+		<id>856</id>
+		<nme>com.android.chrome Activity State Change Responder</nme>
+		<pri>100</pri>
+		<rty>2</rty>
+		<stayawake>true</stayawake>
+		<Action sr="act0" ve="7">
+			<code>300</code>
+			<label>A task that responds to activity state changes for all the activities of the "com.android.chrome" package and is called by the "Activity State Change Controller" Task.
+
+Check Activity State Changes Project docs to get more info on how this task is called and what it should do.
+
+
+Input %par1:
+"
+activity
+"
+
+Input %par2:
+"
+activity_transistion
+"
+
+This task does not return anything.</label>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%task_name</Str>
+			<Str sr="arg1" ve="3">com.android.chrome Activity State Change Responder</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>43</code>
+			<label>If activity_transition is set to "exit_fullscreen" or "config_change_non_fullscreen"</label>
+			<ConditionList sr="if">
+				<bool0>Or</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%activity_transition</lhs>
+					<op>0</op>
+					<rhs>exit_fullscreen</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%activity_transition</lhs>
+					<op>0</op>
+					<rhs>config_change_non_fullscreen</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act11" ve="7">
+			<code>130</code>
+			<label>Reset Screen Brightness</label>
+			<Str sr="arg0" ve="3">Fullscreen Activity Transition Screen Brightness Controller</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Str sr="arg2" ve="3">exit_fullscreen</Str>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Int sr="arg5" val="0"/>
+		</Action>
+		<Action sr="act12" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act13" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>300</code>
+			<label>Parse And Validate Parameters</label>
+		</Action>
+		<Action sr="act3" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%activity</Str>
+			<Str sr="arg1" ve="3">%par1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act4" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%activity_transition</Str>
+			<Str sr="arg1" ve="3">%par2</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act5" ve="7">
+			<code>548</code>
+			<label>Enable this if you want to flash the activities and activity_transistions passed to this task</label>
+			<on>false</on>
+			<Str sr="arg0" ve="3">%activity
+%activity_transition</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+		<Action sr="act6" ve="7">
+			<code>105</code>
+			<label>Enable this if you want to copy the activities passed to this task to the clipboard to make adding conditional statements later for it easier</label>
+			<on>false</on>
+			<Str sr="arg0" ve="3">%activity</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>37</code>
+			<label>If activity equals "org.chromium.chrome.browser.ChromeTabbedActivity" or "com.google.android.apps.chrome.Main", the activities for viewing websites</label>
+			<ConditionList sr="if">
+				<bool0>Or</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%activity</lhs>
+					<op>0</op>
+					<rhs>org.chromium.chrome.browser.ChromeTabbedActivity</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%activity</lhs>
+					<op>0</op>
+					<rhs>com.google.android.apps.chrome.Main</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act8" ve="7">
+			<code>37</code>
+			<label>If activity_transition is set to "config_change_fullscreen"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%activity_transition</lhs>
+					<op>0</op>
+					<rhs>config_change_fullscreen</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act9" ve="7">
+			<code>130</code>
+			<label>Increase Screen Brightness</label>
+			<Str sr="arg0" ve="3">Fullscreen Activity Transition Screen Brightness Controller</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Str sr="arg2" ve="3">enter_fullscreen</Str>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Int sr="arg5" val="0"/>
+		</Action>
+	</Task>
+	<Task sr="task857">
+		<cdate>1565310393511</cdate>
+		<edate>1578425162953</edate>
+		<id>857</id>
+		<nme>com.google.android.youtube Activity State Change Responder</nme>
+		<pri>100</pri>
+		<rty>2</rty>
+		<stayawake>true</stayawake>
+		<Action sr="act0" ve="7">
+			<code>300</code>
+			<label>A task that responds to activity state changes for all the activities of the "com.google.android.youtube" package and is called by the "Activity State Change Controller" Task.
+
+Check Activity State Changes Project docs to get more info on how this task is called and what it should do.
+
+
+Input %par1:
+"
+activity
+"
+
+Input %par2:
+"
+activity_transistion
+"
+
+This task does not return anything.</label>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%task_name</Str>
+			<Str sr="arg1" ve="3">com.google.android.youtube Activity State Change Responder</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>43</code>
+			<label>If activity_transition is set to "exit_fullscreen" or "config_change_non_fullscreen"</label>
+			<ConditionList sr="if">
+				<bool0>Or</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%activity_transition</lhs>
+					<op>0</op>
+					<rhs>exit_fullscreen</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%activity_transition</lhs>
+					<op>0</op>
+					<rhs>config_change_non_fullscreen</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act11" ve="7">
+			<code>130</code>
+			<label>Reset Screen Brightness</label>
+			<Str sr="arg0" ve="3">Fullscreen Activity Transition Screen Brightness Controller</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Str sr="arg2" ve="3">exit_fullscreen</Str>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Int sr="arg5" val="0"/>
+		</Action>
+		<Action sr="act12" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act13" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>300</code>
+			<label>Parse And Validate Parameters</label>
+		</Action>
+		<Action sr="act3" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%activity</Str>
+			<Str sr="arg1" ve="3">%par1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act4" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%activity_transition</Str>
+			<Str sr="arg1" ve="3">%par2</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act5" ve="7">
+			<code>548</code>
+			<label>Enable this if you want to flash the activities and activity_transistions passed to this task</label>
+			<on>false</on>
+			<Str sr="arg0" ve="3">%activity
+%activity_transition</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+		<Action sr="act6" ve="7">
+			<code>105</code>
+			<label>Enable this if you want to copy the activities passed to this task to the clipboard to make adding conditional statements later for it easier</label>
+			<on>false</on>
+			<Str sr="arg0" ve="3">%activity</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>37</code>
+			<label>If activity equals "com.google.android.apps.youtube.app.WatchWhileActivity", the activity for viewing videos</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%activity</lhs>
+					<op>0</op>
+					<rhs>com.google.android.apps.youtube.app.WatchWhileActivity</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act8" ve="7">
+			<code>37</code>
+			<label>If activity_transition is set to "start_fullscreen" or "config_change_fullscreen"</label>
+			<ConditionList sr="if">
+				<bool0>Or</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%activity_transition</lhs>
+					<op>0</op>
+					<rhs>start_fullscreen</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%activity_transition</lhs>
+					<op>0</op>
+					<rhs>config_change_fullscreen</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act9" ve="7">
+			<code>130</code>
+			<label>Increase Screen Brightness</label>
+			<Str sr="arg0" ve="3">Fullscreen Activity Transition Screen Brightness Controller</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Str sr="arg2" ve="3">enter_fullscreen</Str>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Int sr="arg5" val="0"/>
+		</Action>
+	</Task>
+	<Task sr="task858">
+		<cdate>1576882993943</cdate>
+		<edate>1578466989298</edate>
+		<id>858</id>
+		<nme>Activity State Change Controller</nme>
+		<pri>6</pri>
+		<rty>2</rty>
+		<Action sr="act0" ve="7">
+			<code>300</code>
+			<label>A task is called by the "Activity State Change Command Monitor" Profile when the %ActivityStateChangeControllerCommand variable is set.
+
+This task first checks if the current_package_and_activity passed is a valid package and activity name in the format "package_name/activity_name". If it is then it checks if the current activity is in fullscreen mode with status bars hidden either by using the dumpsys command's "mTopIsFullscreen" value if root mode is enabled or from the last "*StatusBar: setSystemUiVisibility" logcat entry's "newVal" bitwise flags. Then it sets the current_acticity_state depending on activity_state_change and fullscreen mode. Then it checks if the a "package_name Activity State Change Responder" Task exists in the Tasker config for the current_package_and_activity or previous_package_and_activity. If either of those exists, then it calculates the previous_activity_task_activity_transition_par and current_activity_task_activity_transition_par depending on activity transitions in the transitions table. Then it calls the "previous_package Activity State Change Responder" Task if it exists with the previous_activity as %par1 and previous_activity_task_activity_transition_par as %par2. Then it calls the "current_package Activity State Change Responder" Task if it exists with the current_activity as %par1 and current_activity_task_activity_transition_par as %par2. Those tasks may respond appropriately to activity transitions must not perform long running operations since this task will not finish until the called tasks are finished to maintain order and any queued tasks for this task will also be in waiting. Any long running operations that do not require ordered execution can be run inside the called tasks in additional tasks with "%priority - 1" so that the called tasks can return before the additional tasks finish.
+
+Check Activity State Changes Project docs to get more info on how this task is called and what it does.
+
+
+Input %par1:
+"
+current_package_and_activity
+activity_state_change
+"
+
+
+This task does not return anything.</label>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%task_name</Str>
+			<Str sr="arg1" ve="3">Activity State Change Controller</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%valid_activity_states_regex</Str>
+			<Str sr="arg1" ve="3">^start_fullscreen|start_non_fullscreen|config_change_fullscreen|config_change_non_fullscreen$</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act100" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act101" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%previous_package</Str>
+			<Str sr="arg1" ve="3">%previous_package_and_activity</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act102" ve="7">
+			<code>598</code>
+			<Str sr="arg0" ve="3">%previous_package</Str>
+			<Str sr="arg1" ve="3">%valid_android_package_and_activity_name_regex</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Str sr="arg5" ve="3"/>
+			<Int sr="arg6" val="1"/>
+			<Str sr="arg7" ve="3">$1</Str>
+		</Action>
+		<Action sr="act103" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%previous_activity</Str>
+			<Str sr="arg1" ve="3">%previous_package_and_activity</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act104" ve="7">
+			<code>598</code>
+			<Str sr="arg0" ve="3">%previous_activity</Str>
+			<Str sr="arg1" ve="3">%valid_android_package_and_activity_name_regex</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Str sr="arg5" ve="3"/>
+			<Int sr="arg6" val="1"/>
+			<Str sr="arg7" ve="3">$2</Str>
+		</Action>
+		<Action sr="act105" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%previous_activity_activity_state_change_controller_task_name</Str>
+			<Str sr="arg1" ve="3">%previous_package Activity State Change Responder</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act106" ve="7">
+			<code>37</code>
+			<label>If task exists</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>,%task_names_list,</lhs>
+					<op>2</op>
+					<rhs>*,%previous_activity_activity_state_change_controller_task_name,*</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act107" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%previous_activity_activity_state_change_controller_task_exists</Str>
+			<Str sr="arg1" ve="3">1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act108" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act109" ve="7">
+			<code>300</code>
+			<label>Check If Activity State Change Controller Task Exists For Previous Activity End</label>
+		</Action>
+		<Action sr="act11" ve="7">
+			<code>300</code>
+			<label>Parse And Validate Parameters</label>
+		</Action>
+		<Action sr="act110" ve="7">
+			<code>37</code>
+			<label>If current_activity_activity_state_change_controller_task_exists and previous_activity_activity_state_change_controller_task_exists Do Not Equal "1", Then Just Return</label>
+			<ConditionList sr="if">
+				<bool0>And</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%current_activity_activity_state_change_controller_task_exists</lhs>
+					<op>1</op>
+					<rhs>1</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%previous_activity_activity_state_change_controller_task_exists</lhs>
+					<op>1</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act111" ve="7">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%enable_debugging</lhs>
+					<op>0</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act112" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">%activity_state_change:
+previous_package_and_activity = "%previous_package_and_activity"
+current_package_and_activity = "%current_package_and_activity"
+previous_activity_state = "%previous_activity_state"
+current_activity_state = "%current_activity_state"</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act113" ve="7">
+			<code>123</code>
+			<Str sr="arg0" ve="3">echo '%TIME
+%activity_state_change:
+previous_package_and_activity = "%previous_package_and_activity"
+current_package_and_activity = "%current_package_and_activity"
+previous_activity_state = "%previous_activity_state"
+current_activity_state = "%current_activity_state"
+
+' &gt;&gt; "/storage/emulated/0/activity_state_change"</Str>
+			<Int sr="arg1" val="0"/>
+			<Int sr="arg2" val="0"/>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+		</Action>
+		<Action sr="act114" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act115" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0"/>
+			<Str sr="arg1" ve="3"/>
+		</Action>
+		<Action sr="act116" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act117" ve="7">
+			<code>300</code>
+			<label>Find Activity Transition Parameters Start</label>
+		</Action>
+		<Action sr="act118" ve="7">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%previous_activity_state</lhs>
+					<op>5</op>
+					<rhs>%valid_activity_states_regex</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act119" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">Invalid previous_activity_state = "%previous_activity_state"</Str>
+			<Int sr="arg1" val="0"/>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%previous_activity_state</lhs>
+					<op>1</op>
+					<rhs>\%PreviousActivityState</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act12" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%activity_state_change_command</Str>
+			<Str sr="arg1" ve="3">%par1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act120" ve="7">
+			<code>547</code>
+			<label>set current_activity_state to current_activity_task_activity_transition_par</label>
+			<Str sr="arg0" ve="3">%current_activity_task_activity_transition_par</Str>
+			<Str sr="arg1" ve="3">%current_activity_state</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act121" ve="7">
+			<code>135</code>
+			<Int sr="arg0" val="1"/>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3">Find Activity Transition Parameters End</Str>
+		</Action>
+		<Action sr="act122" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act123" ve="7">
+			<code>37</code>
+			<label>If current_package_and_activity equals previous_package_and_activity</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%current_package_and_activity</lhs>
+					<op>0</op>
+					<rhs>%previous_package_and_activity</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act124" ve="7">
+			<code>37</code>
+			<label>If current_activity_state is set to "start_fullscreen" and previous_activity_state is set to "start_non_fullscreen", "start_fullscreen", "config_change_non_fullscreen" or "config_change_fullscreen"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%current_activity_state</lhs>
+					<op>0</op>
+					<rhs>start_fullscreen</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act125" ve="7">
+			<code>547</code>
+			<label>set "restart_fullscreen" to current_activity_task_activity_transition_par</label>
+			<Str sr="arg0" ve="3">%current_activity_task_activity_transition_par</Str>
+			<Str sr="arg1" ve="3">restart_fullscreen</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act126" ve="7">
+			<code>43</code>
+			<label>If current_activity_state is set to "start_non_fullscreen" and previous_activity_state is set to "start_non_fullscreen", "start_fullscreen", "config_change_non_fullscreen" or "config_change_fullscreen"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%current_activity_state</lhs>
+					<op>0</op>
+					<rhs>start_non_fullscreen</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act127" ve="7">
+			<code>547</code>
+			<label>set "restart_non_fullscreen" to current_activity_task_activity_transition_par</label>
+			<Str sr="arg0" ve="3">%current_activity_task_activity_transition_par</Str>
+			<Str sr="arg1" ve="3">restart_non_fullscreen</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act128" ve="7">
+			<code>43</code>
+			<label>If current_activity_state is set to "config_change_fullscreen" and previous_activity_state is set to "config_change_fullscreen"</label>
+			<ConditionList sr="if">
+				<bool0>And</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%current_activity_state</lhs>
+					<op>0</op>
+					<rhs>config_change_fullscreen</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%previous_activity_state</lhs>
+					<op>0</op>
+					<rhs>config_change_fullscreen</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act129" ve="7">
+			<code>547</code>
+			<label>set "config_rechange_fullscreen" to current_activity_task_activity_transition_par</label>
+			<Str sr="arg0" ve="3">%current_activity_task_activity_transition_par</Str>
+			<Str sr="arg1" ve="3">config_rechange_fullscreen</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act13" ve="7">
+			<code>590</code>
+			<Str sr="arg0" ve="3">%activity_state_change_command</Str>
+			<Str sr="arg1" ve="3">%newline</Str>
+			<Int sr="arg2" val="0"/>
+		</Action>
+		<Action sr="act130" ve="7">
+			<code>43</code>
+			<label>If current_activity_state is set to "config_change_fullscreen" and previous_activity_state is set to "start_non_fullscreen", "start_fullscreen", or "config_change_non_fullscreen"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%current_activity_state</lhs>
+					<op>0</op>
+					<rhs>config_change_fullscreen</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act131" ve="7">
+			<code>547</code>
+			<label>set "config_change_fullscreen" to current_activity_task_activity_transition_par</label>
+			<Str sr="arg0" ve="3">%current_activity_task_activity_transition_par</Str>
+			<Str sr="arg1" ve="3">config_change_fullscreen</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act132" ve="7">
+			<code>43</code>
+			<label>If current_activity_state is set to "config_change_non_fullscreen" and previous_activity_state is set to "config_change_non_fullscreen"</label>
+			<ConditionList sr="if">
+				<bool0>And</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%current_activity_state</lhs>
+					<op>0</op>
+					<rhs>config_change_non_fullscreen</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%previous_activity_state</lhs>
+					<op>0</op>
+					<rhs>config_change_non_fullscreen</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act133" ve="7">
+			<code>547</code>
+			<label>set "config_rechange_non_fullscreen" to current_activity_task_activity_transition_par</label>
+			<Str sr="arg0" ve="3">%current_activity_task_activity_transition_par</Str>
+			<Str sr="arg1" ve="3">config_rechange_non_fullscreen</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act134" ve="7">
+			<code>43</code>
+			<label>If current_activity_state is set to "config_change_non_fullscreen" and previous_activity_state is set to "start_non_fullscreen", "start_fullscreen" or "config_change_fullscreen"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%current_activity_state</lhs>
+					<op>0</op>
+					<rhs>config_change_non_fullscreen</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act135" ve="7">
+			<code>547</code>
+			<label>set "config_change_non_fullscreen" to current_activity_task_activity_transition_par</label>
+			<Str sr="arg0" ve="3">%current_activity_task_activity_transition_par</Str>
+			<Str sr="arg1" ve="3">config_change_non_fullscreen</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act136" ve="7">
+			<code>43</code>
+		</Action>
+		<Action sr="act137" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">current_activity_task_activity_transition_par Not Handled For Same Activity Start
+previous_package_and_activity = "%previous_package_and_activity"
+current_package_and_activity = "%current_package_and_activity"
+previous_activity_state = "%previous_activity_state"
+current_activity_state = "%current_activity_state"
+%task_name Failed.</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act138" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0"/>
+			<Str sr="arg1" ve="3"/>
+		</Action>
+		<Action sr="act139" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act14" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0"/>
+			<Str sr="arg1" ve="3"/>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%activity_state_change_command(#)</lhs>
+					<op>1</op>
+					<rhs>2</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act140" ve="7">
+			<code>43</code>
+		</Action>
+		<Action sr="act141" ve="7">
+			<code>37</code>
+			<label>If current_activity_state is set to "start_fullscreen" and previous_activity_state is set to "start_non_fullscreen", "start_fullscreen", "config_change_non_fullscreen" or "config_change_fullscreen"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%current_activity_state</lhs>
+					<op>0</op>
+					<rhs>start_fullscreen</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act142" ve="7">
+			<code>547</code>
+			<label>set "start_fullscreen" to current_activity_task_activity_transition_par</label>
+			<Str sr="arg0" ve="3">%current_activity_task_activity_transition_par</Str>
+			<Str sr="arg1" ve="3">start_fullscreen</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act143" ve="7">
+			<code>43</code>
+			<label>If current_activity_state is set to "start_non_fullscreen" and previous_activity_state is set to "start_non_fullscreen", "start_fullscreen", "config_change_non_fullscreen" or "config_change_fullscreen"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%current_activity_state</lhs>
+					<op>0</op>
+					<rhs>start_non_fullscreen</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act144" ve="7">
+			<code>547</code>
+			<label>set "start_non_fullscreen" to current_activity_task_activity_transition_par</label>
+			<Str sr="arg0" ve="3">%current_activity_task_activity_transition_par</Str>
+			<Str sr="arg1" ve="3">start_non_fullscreen</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act145" ve="7">
+			<code>43</code>
+			<label>If current_activity_state is set to "config_change_fullscreen" and previous_activity_state is set to "start_non_fullscreen" or "start_fullscreen"</label>
+			<ConditionList sr="if">
+				<bool0>And</bool0>
+				<bool1>Or2</bool1>
+				<Condition sr="c0" ve="3">
+					<lhs>%current_activity_state</lhs>
+					<op>0</op>
+					<rhs>config_change_fullscreen</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%previous_activity_state</lhs>
+					<op>0</op>
+					<rhs>start_non_fullscreen</rhs>
+				</Condition>
+				<Condition sr="c2" ve="3">
+					<lhs>%previous_activity_state</lhs>
+					<op>0</op>
+					<rhs>start_fullscreen</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act146" ve="7">
+			<code>547</code>
+			<label>set "config_change_fullscreen" to current_activity_task_activity_transition_par</label>
+			<Str sr="arg0" ve="3">%current_activity_task_activity_transition_par</Str>
+			<Str sr="arg1" ve="3">config_change_fullscreen</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act147" ve="7">
+			<code>43</code>
+			<label>If current_activity_state is set to "config_change_non_fullscreen" and previous_activity_state is set to "start_non_fullscreen" or "start_fullscreen"</label>
+			<ConditionList sr="if">
+				<bool0>And</bool0>
+				<bool1>Or2</bool1>
+				<Condition sr="c0" ve="3">
+					<lhs>%current_activity_state</lhs>
+					<op>0</op>
+					<rhs>config_change_non_fullscreen</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%previous_activity_state</lhs>
+					<op>0</op>
+					<rhs>start_non_fullscreen</rhs>
+				</Condition>
+				<Condition sr="c2" ve="3">
+					<lhs>%previous_activity_state</lhs>
+					<op>0</op>
+					<rhs>start_fullscreen</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act148" ve="7">
+			<code>547</code>
+			<label>set "config_change_non_fullscreen" to current_activity_task_activity_transition_par</label>
+			<Str sr="arg0" ve="3">%current_activity_task_activity_transition_par</Str>
+			<Str sr="arg1" ve="3">config_change_non_fullscreen</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act149" ve="7">
+			<code>43</code>
+			<label>If current_activity_state is set to "config_change_fullscreen" or "config_change_non_fullscreen" and previous_activity_state is set to "config_change_fullscreen" or "config_change_non_fullscreen"</label>
+			<ConditionList sr="if">
+				<bool0>Or</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%current_activity_state</lhs>
+					<op>0</op>
+					<rhs>config_change_fullscreen</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%current_activity_state</lhs>
+					<op>0</op>
+					<rhs>config_change_non_fullscreen</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act15" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%current_package_and_activity</Str>
+			<Str sr="arg1" ve="3">%activity_state_change_command(1)</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act150" ve="7">
+			<code>300</code>
+			<label>This would be an anomaly in which current_package_and_activity was set too late or log entries were out of order</label>
+		</Action>
+		<Action sr="act151" ve="7">
+			<code>548</code>
+			<on>false</on>
+			<Str sr="arg0" ve="3">current_package_and_activity Does Not Match A Valid Activity Transition
+previous_package_and_activity = "%previous_package_and_activity"
+current_package_and_activity = "%current_package_and_activity"
+previous_activity_state = "%previous_activity_state"
+current_activity_state = "%current_activity_state"
+%task_name Cancelled.</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act152" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0"/>
+			<Str sr="arg1" ve="3"/>
+		</Action>
+		<Action sr="act153" ve="7">
+			<code>43</code>
+		</Action>
+		<Action sr="act154" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">current_activity_task_activity_transition_par Not Handled For Different Activity Start
+previous_package_and_activity = "%previous_package_and_activity"
+current_package_and_activity = "%current_package_and_activity"
+previous_activity_state = "%previous_activity_state"
+current_activity_state = "%current_activity_state"
+%task_name Failed.</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act155" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0"/>
+			<Str sr="arg1" ve="3"/>
+		</Action>
+		<Action sr="act156" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act157" ve="7">
+			<code>135</code>
+			<Int sr="arg0" val="1"/>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3">Find Activity Transition Parameters End</Str>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%previous_activity_activity_state_change_controller_task_exists</lhs>
+					<op>1</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act158" ve="7">
+			<code>37</code>
+			<label>If previous_activity_state is set to "start_fullscreen" or "config_change_fullscreen"</label>
+			<ConditionList sr="if">
+				<bool0>Or</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%previous_activity_state</lhs>
+					<op>0</op>
+					<rhs>start_fullscreen</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%previous_activity_state</lhs>
+					<op>0</op>
+					<rhs>config_change_fullscreen</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act159" ve="7">
+			<code>547</code>
+			<label>set "exit_fullscreen" to current_activity_task_activity_transition_par</label>
+			<Str sr="arg0" ve="3">%previous_activity_task_activity_transition_par</Str>
+			<Str sr="arg1" ve="3">exit_fullscreen</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act16" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%activity_state_change</Str>
+			<Str sr="arg1" ve="3">%activity_state_change_command(2)</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act160" ve="7">
+			<code>43</code>
+			<label>If previous_activity_state is set to "start_non_fullscreen" or "config_change_non_fullscreen"</label>
+			<ConditionList sr="if">
+				<bool0>Or</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%previous_activity_state</lhs>
+					<op>0</op>
+					<rhs>start_non_fullscreen</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%previous_activity_state</lhs>
+					<op>0</op>
+					<rhs>config_change_non_fullscreen</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act161" ve="7">
+			<code>547</code>
+			<label>set "exit_non_fullscreen" to current_activity_task_activity_transition_par</label>
+			<Str sr="arg0" ve="3">%previous_activity_task_activity_transition_par</Str>
+			<Str sr="arg1" ve="3">exit_non_fullscreen</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act162" ve="7">
+			<code>43</code>
+		</Action>
+		<Action sr="act163" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">previous_activity_task_activity_transition_par Not Handled For Different Activity Start
+previous_package_and_activity = "%previous_package_and_activity"
+current_package_and_activity = "%current_package_and_activity"
+previous_activity_state = "%previous_activity_state"
+current_activity_state = "%current_activity_state"
+%task_name Failed.</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act164" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0"/>
+			<Str sr="arg1" ve="3"/>
+		</Action>
+		<Action sr="act165" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act166" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act167" ve="7">
+			<code>300</code>
+			<label>Find Activity Transition Parameters End</label>
+		</Action>
+		<Action sr="act168" ve="7">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%enable_debugging</lhs>
+					<op>0</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act169" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">activity_state_change:
+previous_package_and_activity = "%previous_package_and_activity"
+current_package_and_activity = "%current_package_and_activity"
+previous_activity_state = "%previous_activity_state"
+current_activity_state = "%current_activity_state"
+previous_activity_task_activity_transition_par = "%previous_activity_task_activity_transition_par"
+current_activity_task_activity_transition_par = "%current_activity_task_activity_transition_par"</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act17" ve="7">
+			<code>300</code>
+			<label>Parse And Validate Current Package And Activity</label>
+		</Action>
+		<Action sr="act170" ve="7">
+			<code>123</code>
+			<Str sr="arg0" ve="3">echo '%TIME
+%activity_state_change:
+previous_package_and_activity = "%previous_package_and_activity"
+current_package_and_activity = "%current_package_and_activity"
+previous_activity_state = "%previous_activity_state"
+current_activity_state = "%current_activity_state"
+previous_activity_task_activity_transition_par = "%previous_activity_task_activity_transition_par"
+current_activity_task_activity_transition_par = "%current_activity_task_activity_transition_par"
+
+' &gt;&gt; "/storage/emulated/0/activity_state_change"</Str>
+			<Int sr="arg1" val="0"/>
+			<Int sr="arg2" val="0"/>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+		</Action>
+		<Action sr="act171" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act172" ve="7">
+			<code>37</code>
+			<label>If previous_activity_activity_state_change_controller_task_exists is set to "1" and previous_activity_task_activity_transition_par is set</label>
+			<ConditionList sr="if">
+				<bool0>And</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%previous_activity_activity_state_change_controller_task_exists</lhs>
+					<op>0</op>
+					<rhs>1</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%previous_activity_task_activity_transition_par</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act173" ve="7">
+			<code>130</code>
+			<Str sr="arg0" ve="3">%previous_activity_activity_state_change_controller_task_name</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Str sr="arg2" ve="3">%previous_activity</Str>
+			<Str sr="arg3" ve="3">%previous_activity_task_activity_transition_par</Str>
+			<Str sr="arg4" ve="3"/>
+			<Int sr="arg5" val="0"/>
+		</Action>
+		<Action sr="act174" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act175" ve="7">
+			<code>37</code>
+			<label>If current_activity_activity_state_change_controller_task_exists is set to "1"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%current_activity_activity_state_change_controller_task_exists</lhs>
+					<op>0</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act176" ve="7">
+			<code>130</code>
+			<Str sr="arg0" ve="3">%current_activity_activity_state_change_controller_task_name</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Str sr="arg2" ve="3">%current_activity</Str>
+			<Str sr="arg3" ve="3">%current_activity_task_activity_transition_par</Str>
+			<Str sr="arg4" ve="3"/>
+			<Int sr="arg5" val="0"/>
+		</Action>
+		<Action sr="act177" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act18" ve="7">
+			<code>547</code>
+			<label>If activity_state_change equals "activity_config_change", then set "%PreviousPackageAndActivity" to current_package_and_activity</label>
+			<Str sr="arg0" ve="3">%current_package_and_activity</Str>
+			<Str sr="arg1" ve="3">%PreviousPackageAndActivity</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%activity_state_change</lhs>
+					<op>0</op>
+					<rhs>activity_config_change</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act19" ve="7">
+			<code>548</code>
+			<on>false</on>
+			<Str sr="arg0" ve="3">"
+%current_package_and_activity
+%activity_state_change
+"</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>300</code>
+			<label>Set User Modifiable Variables Start</label>
+		</Action>
+		<Action sr="act20" ve="7">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%current_package_and_activity</lhs>
+					<op>5</op>
+					<rhs>%valid_android_package_and_activity_name_regex</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act21" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">Invalid current_package_and_activity = "%current_package_and_activity"</Str>
+			<Int sr="arg1" val="0"/>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%current_package_and_activity</lhs>
+					<op>1</op>
+					<rhs>\%PreviousPackageAndActivity</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act22" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0"/>
+			<Str sr="arg1" ve="3"/>
+		</Action>
+		<Action sr="act23" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act24" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%current_package</Str>
+			<Str sr="arg1" ve="3">%current_package_and_activity</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act25" ve="7">
+			<code>598</code>
+			<Str sr="arg0" ve="3">%current_package</Str>
+			<Str sr="arg1" ve="3">%valid_android_package_and_activity_name_regex</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Str sr="arg5" ve="3"/>
+			<Int sr="arg6" val="1"/>
+			<Str sr="arg7" ve="3">$1</Str>
+		</Action>
+		<Action sr="act26" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%current_activity</Str>
+			<Str sr="arg1" ve="3">%current_package_and_activity</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act27" ve="7">
+			<code>598</code>
+			<Str sr="arg0" ve="3">%current_activity</Str>
+			<Str sr="arg1" ve="3">%valid_android_package_and_activity_name_regex</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Str sr="arg5" ve="3"/>
+			<Int sr="arg6" val="1"/>
+			<Str sr="arg7" ve="3">$2</Str>
+		</Action>
+		<Action sr="act28" ve="7">
+			<code>300</code>
+			<label>Wait For User To Hide Status Bar By Tapping Screen Start</label>
+		</Action>
+		<Action sr="act29" ve="7">
+			<code>37</code>
+			<label>If activity_state_change is set to "activity_start"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%activity_state_change</lhs>
+					<op>0</op>
+					<rhs>activity_start</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act3" ve="7">
+			<code>547</code>
+			<label>Enable this if you want to use root mode for some actions like finding if current activity is fullscreen. Root mode is only used if Tasker in-built %ROOT variable is set to "yes"</label>
+			<Str sr="arg0" ve="3">%use_root_mode</Str>
+			<Str sr="arg1" ve="3">1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act30" ve="7">
+			<code>30</code>
+			<Int sr="arg0" val="0"/>
+			<Int sr="arg1" val="1"/>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+		</Action>
+		<Action sr="act31" ve="7">
+			<code>43</code>
+			<label>If activity_state_change is set to "activity_config_change"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%activity_state_change</lhs>
+					<op>0</op>
+					<rhs>activity_config_change</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act32" ve="7">
+			<code>30</code>
+			<Int sr="arg0" val="0"/>
+			<Int sr="arg1" val="2"/>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+		</Action>
+		<Action sr="act33" ve="7">
+			<code>43</code>
+		</Action>
+		<Action sr="act34" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">activity_state_change "%activity_state_change" Not Handled
+%task_name Failed.</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act35" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0"/>
+			<Str sr="arg1" ve="3"/>
+		</Action>
+		<Action sr="act36" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act37" ve="7">
+			<code>300</code>
+			<label>Wait For User To Hide Status Bar By Tapping Screen End</label>
+		</Action>
+		<Action sr="act38" ve="7">
+			<code>300</code>
+			<label>Check If Current Activity Is In Fullscreen Mode Start</label>
+		</Action>
+		<Action sr="act39" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%current_activity_is_fullscreen</Str>
+			<Str sr="arg1" ve="3">0</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act4" ve="7">
+			<code>547</code>
+			<label>Enable this if you want to enable flash actions and logging to "/storage/emulated/0/activity_state_change" file for all activity state changes</label>
+			<on>false</on>
+			<Str sr="arg0" ve="3">%enable_debugging</Str>
+			<Str sr="arg1" ve="3">1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act40" ve="7">
+			<code>37</code>
+			<ConditionList sr="if">
+				<bool0>And</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%ROOT</lhs>
+					<op>0</op>
+					<rhs>yes</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%use_root_mode</lhs>
+					<op>0</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act41" ve="7">
+			<code>123</code>
+			<Str sr="arg0" ve="3">dumpsys window policy | grep mTopIsFullscreen | sed -E 's/.*mTopIsFullscreen=([^ ]+) .*/\1/'</Str>
+			<Int sr="arg1" val="0"/>
+			<Int sr="arg2" val="1"/>
+			<Str sr="arg3" ve="3">%mtopisfullscreen</Str>
+			<Str sr="arg4" ve="3">%errors</Str>
+			<Str sr="arg5" ve="3"/>
+		</Action>
+		<Action sr="act42" ve="7">
+			<code>37</code>
+			<ConditionList sr="if">
+				<bool0>Or</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs>yes</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%errors</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act43" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">Failed To Get Check If Current Activity Is Fullscreen  From dumpsys
+
+mtopisfullscreen =
+"
+%mtopisfullscreen
+"
+
+errors =
+"
+%errors
+"</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act44" ve="7">
+			<code>137</code>
+			<Int sr="arg0" val="0"/>
+			<Str sr="arg1" ve="3"/>
+		</Action>
+		<Action sr="act45" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act46" ve="7">
+			<code>547</code>
+			<label>If mtopisfullscreen equals "true", then set "1" to current_activity_is_fullscreen</label>
+			<Str sr="arg0" ve="3">%current_activity_is_fullscreen</Str>
+			<Str sr="arg1" ve="3">1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%mtopisfullscreen</lhs>
+					<op>0</op>
+					<rhs>true</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act47" ve="7">
+			<code>43</code>
+		</Action>
+		<Action sr="act48" ve="7">
+			<code>123</code>
+			<se>false</se>
+			<Str sr="arg0" ve="3">logcat -d StatusBar:D PhoneStatusBar:D *:S</Str>
+			<Int sr="arg1" val="0"/>
+			<Int sr="arg2" val="0"/>
+			<Str sr="arg3" ve="3">%logcat</Str>
+			<Str sr="arg4" ve="3">%errors</Str>
+			<Str sr="arg5" ve="3"/>
+		</Action>
+		<Action sr="act49" ve="7">
+			<code>135</code>
+			<Int sr="arg0" val="1"/>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3">Check If Current Activity Is In Fullscreen Mode End</Str>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%logcat</lhs>
+					<op>13</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act5" ve="7">
+			<code>300</code>
+			<label>Set User Modifiable Variables End</label>
+		</Action>
+		<Action sr="act50" ve="7">
+			<code>548</code>
+			<on>false</on>
+			<Str sr="arg0" ve="3">%logcat
+%errors</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+		<Action sr="act51" ve="7">
+			<code>598</code>
+			<Str sr="arg0" ve="3">%logcat</Str>
+			<Str sr="arg1" ve="3">.*StatusBar: setSystemUiVisibility.*</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Str sr="arg5" ve="3">%setsystemuivisibility_log_entries</Str>
+			<Int sr="arg6" val="0"/>
+			<Str sr="arg7" ve="3"/>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%logcat</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act52" ve="7">
+			<code>548</code>
+			<on>false</on>
+			<Str sr="arg0" ve="3">%setsystemuivisibility_log_entries()</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+		<Action sr="act53" ve="7">
+			<code>135</code>
+			<Int sr="arg0" val="1"/>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3">Check If Current Activity Is In Fullscreen Mode End</Str>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%setsystemuivisibility_log_entries(#)</lhs>
+					<op>0</op>
+					<rhs>0</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act54" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%setsystemuivisibility_last_log_entry</Str>
+			<Str sr="arg1" ve="3">%setsystemuivisibility_log_entries(&lt;)</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act55" ve="7">
+			<code>548</code>
+			<on>false</on>
+			<Str sr="arg0" ve="3">%setsystemuivisibility_log_entries(#)</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+		<Action sr="act56" ve="7">
+			<code>548</code>
+			<on>false</on>
+			<Str sr="arg0" ve="3">%setsystemuivisibility_last_log_entry</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+		<Action sr="act57" ve="7">
+			<code>598</code>
+			<Str sr="arg0" ve="3">%setsystemuivisibility_last_log_entry</Str>
+			<Str sr="arg1" ve="3">.*newVal=([^ ]+) .*</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Str sr="arg5" ve="3"/>
+			<Int sr="arg6" val="1"/>
+			<Str sr="arg7" ve="3">$1</Str>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%setsystemuivisibility_last_log_entry</lhs>
+					<op>12</op>
+					<rhs>0</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act58" ve="7">
+			<code>548</code>
+			<on>false</on>
+			<Str sr="arg0" ve="3">%setsystemuivisibility_last_log_entry</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+		<Action sr="act59" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%system_ui_visibility</Str>
+			<Str sr="arg1" ve="3">%setsystemuivisibility_last_log_entry</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act6" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%newline</Str>
+			<Str sr="arg1" ve="3">
+</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act60" ve="7">
+			<code>135</code>
+			<Int sr="arg0" val="1"/>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3">Check If Current Activity Is In Fullscreen Mode End</Str>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%system_ui_visibility</lhs>
+					<op>5</op>
+					<rhs>^[0-9a-fA-F]+$</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act61" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%system_ui_visibility</Str>
+			<Str sr="arg1" ve="3">0x%setsystemuivisibility_last_log_entry</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act62" ve="7">
+			<code>123</code>
+			<label>system_ui_visibility &amp; (View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
+4 | 2 = 6</label>
+			<Str sr="arg0" ve="3">echo "$(( %system_ui_visibility &amp; 6 ))"</Str>
+			<Int sr="arg1" val="0"/>
+			<Int sr="arg2" val="0"/>
+			<Str sr="arg3" ve="3">%system_ui_visibility_fullscreen_and</Str>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+		</Action>
+		<Action sr="act63" ve="7">
+			<code>135</code>
+			<Int sr="arg0" val="1"/>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3">Check If Current Activity Is In Fullscreen Mode End</Str>
+			<ConditionList sr="if">
+				<bool0>Or</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs>^[0-9]+$</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%errors</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act64" ve="7">
+			<code>123</code>
+			<label>system_ui_visibility &amp; (View.SYSTEM_UI_FLAG_IMMERSIVE | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+2048 | 4096 = 6144</label>
+			<on>false</on>
+			<Str sr="arg0" ve="3">echo "$(( %system_ui_visibility &amp; 6144 ))"</Str>
+			<Int sr="arg1" val="0"/>
+			<Int sr="arg2" val="0"/>
+			<Str sr="arg3" ve="3">%system_ui_visibility_immersive_and</Str>
+			<Str sr="arg4" ve="3"/>
+			<Str sr="arg5" ve="3"/>
+		</Action>
+		<Action sr="act65" ve="7">
+			<code>135</code>
+			<on>false</on>
+			<Int sr="arg0" val="1"/>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3">Check If Current Activity Is In Fullscreen Mode End</Str>
+			<ConditionList sr="if">
+				<bool0>Or</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%err</lhs>
+					<op>12</op>
+					<rhs>^[0-9]+$</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%errors</lhs>
+					<op>12</op>
+					<rhs></rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act66" ve="7">
+			<code>548</code>
+			<on>false</on>
+			<Str sr="arg0" ve="3">%system_ui_visibility_fullscreen_and
+%system_ui_visibility_immersive_and
+%current_activity_is_fullscreen</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+		<Action sr="act67" ve="7">
+			<code>547</code>
+			<label>If system_ui_visibility_fullscreen_and does not equal "0", then set "1" to current_activity_is_fullscreen
+
+The system_ui_visibility_immersive_and does not equal "0" check is removed because in some cases in which the activity is not truly fullscreen with the status bar hidden the immersive flags are set, like for youtube app
+The fullscreen flags are set even in immersive mode and its check is enough to detect fullscreen</label>
+			<Str sr="arg0" ve="3">%current_activity_is_fullscreen</Str>
+			<Str sr="arg1" ve="3">1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%system_ui_visibility_fullscreen_and</lhs>
+					<op>1</op>
+					<rhs>0</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act68" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act69" ve="7">
+			<code>300</code>
+			<label>Check If Current Activity Is In Fullscreen Mode End</label>
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%valid_android_package_name_regex</Str>
+			<Str sr="arg1" ve="3">^(?:[A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*$</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act70" ve="7">
+			<code>300</code>
+			<label>Find Current Activity State Start</label>
+		</Action>
+		<Action sr="act71" ve="7">
+			<code>37</code>
+			<label>If activity_state_change is set to "activity_start"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%activity_state_change</lhs>
+					<op>0</op>
+					<rhs>activity_start</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act72" ve="7">
+			<code>37</code>
+			<label>If current_activity_is_fullscreen is set to "1"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%current_activity_is_fullscreen</lhs>
+					<op>0</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act73" ve="7">
+			<code>547</code>
+			<label>set "start_fullscreen" to current_activity_state</label>
+			<Str sr="arg0" ve="3">%current_activity_state</Str>
+			<Str sr="arg1" ve="3">start_fullscreen</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act74" ve="7">
+			<code>43</code>
+		</Action>
+		<Action sr="act75" ve="7">
+			<code>547</code>
+			<label>set "start_non_fullscreen" to current_activity_state</label>
+			<Str sr="arg0" ve="3">%current_activity_state</Str>
+			<Str sr="arg1" ve="3">start_non_fullscreen</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act76" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act77" ve="7">
+			<code>43</code>
+			<label>If activity_state_change is set to "activity_config_change"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%activity_state_change</lhs>
+					<op>0</op>
+					<rhs>activity_config_change</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act78" ve="7">
+			<code>37</code>
+			<label>If current_activity_is_fullscreen is set to "1"</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%current_activity_is_fullscreen</lhs>
+					<op>0</op>
+					<rhs>1</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act79" ve="7">
+			<code>547</code>
+			<label>set "config_change_fullscreen" to current_activity_state</label>
+			<Str sr="arg0" ve="3">%current_activity_state</Str>
+			<Str sr="arg1" ve="3">config_change_fullscreen</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act8" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%valid_android_activity_name_regex</Str>
+			<Str sr="arg1" ve="3">^\p{javaJavaIdentifierStart}\p{javaJavaIdentifierPart}*(?:\.\p{javaJavaIdentifierStart}\p{javaJavaIdentifierPart}*)*$</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act80" ve="7">
+			<code>43</code>
+		</Action>
+		<Action sr="act81" ve="7">
+			<code>547</code>
+			<label>set "config_change_non_fullscreen" to current_activity_state</label>
+			<Str sr="arg0" ve="3">%current_activity_state</Str>
+			<Str sr="arg1" ve="3">config_change_non_fullscreen</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act82" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act83" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act84" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%previous_activity_state</Str>
+			<Str sr="arg1" ve="3">%PreviousActivityState</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act85" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%PreviousActivityState</Str>
+			<Str sr="arg1" ve="3">%current_activity_state</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act86" ve="7">
+			<code>300</code>
+			<label>Find Current Activity State End</label>
+		</Action>
+		<Action sr="act87" ve="7">
+			<code>347</code>
+			<Int sr="arg0" val="7"/>
+			<Str sr="arg1" ve="3"/>
+			<Str sr="arg2" ve="3">%task_names_list</Str>
+		</Action>
+		<Action sr="act88" ve="7">
+			<code>592</code>
+			<Str sr="arg0" ve="3">%task_names_list</Str>
+			<Str sr="arg1" ve="3">,</Str>
+			<Int sr="arg2" val="0"/>
+		</Action>
+		<Action sr="act89" ve="7">
+			<code>300</code>
+			<label>Check If Activity State Change Controller Task Exists For Current Activity Start</label>
+		</Action>
+		<Action sr="act9" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%valid_android_package_and_activity_name_regex</Str>
+			<Str sr="arg1" ve="3">^((?:[A-Za-z]{1}[A-Za-z\d_]*\.)+[A-Za-z][A-Za-z\d_]*)/(?:\.)?(\p{javaJavaIdentifierStart}\p{javaJavaIdentifierPart}*(?:\.\p{javaJavaIdentifierStart}\p{javaJavaIdentifierPart}*)*)$</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act90" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%current_activity_activity_state_change_controller_task_name</Str>
+			<Str sr="arg1" ve="3">%current_package Activity State Change Responder</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act91" ve="7">
+			<code>37</code>
+			<label>If task exists</label>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>,%task_names_list,</lhs>
+					<op>2</op>
+					<rhs>*,%current_activity_activity_state_change_controller_task_name,*</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act92" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%current_activity_activity_state_change_controller_task_exists</Str>
+			<Str sr="arg1" ve="3">1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act93" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act94" ve="7">
+			<code>300</code>
+			<label>Check If Activity State Change Controller Task Exists For Current Activity End</label>
+		</Action>
+		<Action sr="act95" ve="7">
+			<code>300</code>
+			<label>Check If Activity State Change Controller Task Exists For Previous Activity Start</label>
+		</Action>
+		<Action sr="act96" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%previous_package_and_activity</Str>
+			<Str sr="arg1" ve="3">%PreviousPackageAndActivity</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act97" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%PreviousPackageAndActivity</Str>
+			<Str sr="arg1" ve="3">%current_package_and_activity</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act98" ve="7">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%previous_package_and_activity</lhs>
+					<op>5</op>
+					<rhs>%valid_android_package_and_activity_name_regex</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act99" ve="7">
+			<code>135</code>
+			<Int sr="arg0" val="1"/>
+			<Int sr="arg1" val="1"/>
+			<Str sr="arg2" ve="3">Check If Activity State Change Controller Task Exists For Previous Activity End</Str>
+		</Action>
+	</Task>
+	<Task sr="task860">
+		<cdate>1578341470419</cdate>
+		<edate>1578467034405</edate>
+		<id>860</id>
+		<pri>6</pri>
+		<Action sr="act0" ve="7">
+			<code>130</code>
+			<label>Pass %ActivityStateChangeControllerCommand as %par1</label>
+			<Str sr="arg0" ve="3">Activity State Change Controller</Str>
+			<Int sr="arg1">
+				<var>%priority</var>
+			</Int>
+			<Str sr="arg2" ve="3">%ActivityStateChangeControllerCommand</Str>
+			<Str sr="arg3" ve="3"/>
+			<Str sr="arg4" ve="3"/>
+			<Int sr="arg5" val="0"/>
+		</Action>
+	</Task>
+	<Task sr="task864">
+		<cdate>1578402483159</cdate>
+		<edate>1578428666819</edate>
+		<id>864</id>
+		<nme>Fullscreen Activity Transition Screen Brightness Controller</nme>
+		<Action sr="act0" ve="7">
+			<code>300</code>
+			<label>A helper task that can be used to set screen brightness if an activity enters or exits fullscreen mode. It ideally should be called by the "package_name Activity State Change Responder" Tasks.
+
+Currently it increases screen brightness to 75% if its less than that when an activity enters fullscreen mode and battery level is higher than 20%. It resets brightness to the old level which was set before the activity entered fullscreen mode.
+ 
+Support for setting screen brightness based on current light level set in Tasker in-built variable %LIGHT should be added later.
+
+action must be set to "enter_fullscreen" or "exit_fullscreen"
+
+
+Input %par1:
+"
+action
+"
+
+Returns:
+"
+result_code
+"
+
+If the task is successful, then result_code will contain "0".
+Otherwise it will contain an appropriate exit code.</label>
+		</Action>
+		<Action sr="act1" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%valid_display_brightness_regex</Str>
+			<Str sr="arg1" ve="3">^([0-9]{1,2}|1[0-9]{1,2}|2[0-4][0-9]|25[0-5])$</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act10" ve="7">
+			<code>549</code>
+			<on>false</on>
+			<Str sr="arg0" ve="3">%PreviousFullscreenBrightnessValue</Str>
+			<Int sr="arg1" val="0"/>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+		</Action>
+		<Action sr="act11" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act12" ve="7">
+			<code>43</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%action</lhs>
+					<op>0</op>
+					<rhs>exit_fullscreen</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act13" ve="7">
+			<code>547</code>
+			<label>%PreviousFullscreenBrightnessValue</label>
+			<Str sr="arg0" ve="3">%brightness_level_to_set</Str>
+			<Str sr="arg1" ve="3">%PreviousFullscreenBrightnessValue</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act14" ve="7">
+			<code>37</code>
+			<ConditionList sr="if">
+				<bool0>And</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%brightness_level_to_set</lhs>
+					<op>4</op>
+					<rhs>%valid_display_brightness_regex</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%brightness_level_to_set</lhs>
+					<op>1</op>
+					<rhs>%BRIGHT</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act15" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">Resetting Brightness To "%brightness_level_to_set"</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+		<Action sr="act16" ve="7">
+			<code>810</code>
+			<Int sr="arg0">
+				<var>%brightness_level_to_set</var>
+			</Int>
+			<Int sr="arg1" val="0"/>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+		</Action>
+		<Action sr="act17" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act18" ve="7">
+			<code>38</code>
+		</Action>
+		<Action sr="act19" ve="7">
+			<code>126</code>
+			<Str sr="arg0" ve="3">0</Str>
+			<Int sr="arg1" val="1"/>
+		</Action>
+		<Action sr="act2" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%action</Str>
+			<Str sr="arg1" ve="3">%par1</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act3" ve="7">
+			<code>37</code>
+			<ConditionList sr="if">
+				<Condition sr="c0" ve="3">
+					<lhs>%action</lhs>
+					<op>0</op>
+					<rhs>enter_fullscreen</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act4" ve="7">
+			<code>547</code>
+			<label>194 = 75%</label>
+			<Str sr="arg0" ve="3">%brightness_level_to_set</Str>
+			<Str sr="arg1" ve="3">194</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act5" ve="7">
+			<code>37</code>
+			<label>If %BRIGHT is less than brightness_level_to_set and battery level is greater than 20</label>
+			<ConditionList sr="if">
+				<bool0>And</bool0>
+				<Condition sr="c0" ve="3">
+					<lhs>%BRIGHT</lhs>
+					<op>6</op>
+					<rhs>%brightness_level_to_set</rhs>
+				</Condition>
+				<Condition sr="c1" ve="3">
+					<lhs>%BATT</lhs>
+					<op>7</op>
+					<rhs>20</rhs>
+				</Condition>
+			</ConditionList>
+		</Action>
+		<Action sr="act6" ve="7">
+			<code>548</code>
+			<Str sr="arg0" ve="3">Setting Brightness To "%brightness_level_to_set"</Str>
+			<Int sr="arg1" val="0"/>
+		</Action>
+		<Action sr="act7" ve="7">
+			<code>547</code>
+			<Str sr="arg0" ve="3">%PreviousFullscreenBrightnessValue</Str>
+			<Str sr="arg1" ve="3">%BRIGHT</Str>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+			<Int sr="arg4" val="0"/>
+			<Int sr="arg5" val="3"/>
+		</Action>
+		<Action sr="act8" ve="7">
+			<code>810</code>
+			<Int sr="arg0">
+				<var>%brightness_level_to_set</var>
+			</Int>
+			<Int sr="arg1" val="0"/>
+			<Int sr="arg2" val="0"/>
+			<Int sr="arg3" val="0"/>
+		</Action>
+		<Action sr="act9" ve="7">
+			<code>43</code>
+		</Action>
+	</Task>
+</TaskerData>
