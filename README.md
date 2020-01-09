@@ -167,7 +167,7 @@ Download `Activity State Changes Tasker Project` latest release from [here](http
 
 ### Install Instructions For Tasker In Android:
 
-1. Import `Activity_State_Changes-v*.prj.xml` Project file into Tasker.
+1. Import `Activity_State_Changes.prj.xml` Project file into Tasker.
 
 ##
 
