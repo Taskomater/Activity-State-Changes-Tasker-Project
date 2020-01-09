@@ -1,8 +1,8 @@
 # Activity State Changes
 
 ## Export Info:
-**Tasker Version:** `5.9`
-**Timestamp:** `2020-01-09 05.27.18`
+**Tasker Version:** `5.9`  
+**Timestamp:** `2020-01-09 06.12.33`  
 
 
 
@@ -40,38 +40,38 @@
 
 ## Profiles Info:
 
-**#:** `1`
-**Name:** `ActivityTrigger Activity Start Monitor`
-**ID:** `855`
-**Entry Task:** `Activity State Change Relay`
+**#:** `1`  
+**Name:** `ActivityTrigger Activity Start Monitor`  
+**ID:** `855`  
+**Entry Task:** `Activity State Change Relay`  
 ##
 
 
-**#:** `2`
-**Name:** `Custom Activity Start Monitor`
-**ID:** `863`
-**Entry Task:** `Activity State Change Relay`
+**#:** `2`  
+**Name:** `Custom Activity Start Monitor`  
+**ID:** `863`  
+**Entry Task:** `Activity State Change Relay`  
 ##
 
 
-**#:** `3`
-**Name:** `ActivityManager Activity Config Change Monitor`
-**ID:** `841`
-**Entry Task:** `Activity State Change Relay`
+**#:** `3`  
+**Name:** `ActivityManager Activity Config Change Monitor`  
+**ID:** `841`  
+**Entry Task:** `Activity State Change Relay`  
 ##
 
 
-**#:** `4`
-**Name:** `Activity State Change Controller Command Monitor`
-**ID:** `859`
-**Entry Task:** `Anonymous (860)`
+**#:** `4`  
+**Name:** `Activity State Change Controller Command Monitor`  
+**ID:** `859`  
+**Entry Task:** `Anonymous (860)`  
 ##
 
 
-**#:** `5`
-**Name:** `Reset Activity State Change Variables On Monitor Start`
-**ID:** `847`
-**Entry Task:** `Reset Activity State Change Variables`
+**#:** `5`  
+**Name:** `Reset Activity State Change Variables On Monitor Start`  
+**ID:** `847`  
+**Entry Task:** `Reset Activity State Change Variables`  
 ##
 
 
@@ -79,11 +79,11 @@
 
 ## Tasks Info:
 
-**#:** `1`
-**Name:** `Activity State Change Relay`
-**ID:** `839`
-**Collision Handling:** `Run Both Together`
-**Keep Device Awake:** `false`
+**#:** `1`  
+**Name:** `Activity State Change Relay`  
+**ID:** `839`  
+**Collision Handling:** `Run Both Together`  
+**Keep Device Awake:** `false`  
 **Help:**
 ```
 A task that should be called whenever an activity is started or resumed again or the activity's config changes like entering or exiting fullscreen mode. Ideally a "Logcat Entry" Profile Event should call this task so that the %lc_text variable can be parsed.
@@ -100,11 +100,11 @@ This task does not take any parameters or return anything.
 ##
 
 
-**#:** `2`
-**Name:** `Activity State Change Controller`
-**ID:** `858`
-**Collision Handling:** `Run Both Together`
-**Keep Device Awake:** `false`
+**#:** `2`  
+**Name:** `Activity State Change Controller`  
+**ID:** `858`  
+**Collision Handling:** `Run Both Together`  
+**Keep Device Awake:** `false`  
 **Help:**
 ```
 A task is called by the "Activity State Change Controller Command Monitor" Profile when the %ActivityStateChangeControllerCommand variable is set.
@@ -126,11 +126,11 @@ This task does not return anything.
 ##
 
 
-**#:** `3`
-**Name:** `Reset Activity State Change Variables`
-**ID:** `852`
-**Collision Handling:** `Abort New Task`
-**Keep Device Awake:** `false`
+**#:** `3`  
+**Name:** `Reset Activity State Change Variables`  
+**ID:** `852`  
+**Collision Handling:** `Abort New Task`  
+**Keep Device Awake:** `false`  
 **Help:**
 ```
 A task that resets Activity States Changes Project variables.
@@ -143,11 +143,11 @@ This task does not take any parameters or return anything.
 ##
 
 
-**#:** `4`
-**Name:** `com.whatsapp Activity State Change Responder`
-**ID:** `853`
-**Collision Handling:** `Run Both Together`
-**Keep Device Awake:** `false`
+**#:** `4`  
+**Name:** `com.whatsapp Activity State Change Responder`  
+**ID:** `853`  
+**Collision Handling:** `Run Both Together`  
+**Keep Device Awake:** `false`  
 **Help:**
 ```
 A task that responds to activity state changes for all the activities of the "com.whatsapp" package and is called by the "Activity State Change Controller" Task.
@@ -170,11 +170,11 @@ This task does not return anything.
 ##
 
 
-**#:** `5`
-**Name:** `com.fstop.photo Activity State Change Responder`
-**ID:** `854`
-**Collision Handling:** `Run Both Together`
-**Keep Device Awake:** `false`
+**#:** `5`  
+**Name:** `com.fstop.photo Activity State Change Responder`  
+**ID:** `854`  
+**Collision Handling:** `Run Both Together`  
+**Keep Device Awake:** `false`  
 **Help:**
 ```
 A task that responds to activity state changes for all the activities of the "com.fstop.photo" package and is called by the "Activity State Change Controller" Task.
@@ -197,11 +197,11 @@ This task does not return anything.
 ##
 
 
-**#:** `6`
-**Name:** `com.android.chrome Activity State Change Responder`
-**ID:** `856`
-**Collision Handling:** `Run Both Together`
-**Keep Device Awake:** `false`
+**#:** `6`  
+**Name:** `com.android.chrome Activity State Change Responder`  
+**ID:** `856`  
+**Collision Handling:** `Run Both Together`  
+**Keep Device Awake:** `false`  
 **Help:**
 ```
 A task that responds to activity state changes for all the activities of the "com.android.chrome" package and is called by the "Activity State Change Controller" Task.
@@ -224,11 +224,11 @@ This task does not return anything.
 ##
 
 
-**#:** `7`
-**Name:** `com.google.android.youtube Activity State Change Responder`
-**ID:** `857`
-**Collision Handling:** `Run Both Together`
-**Keep Device Awake:** `false`
+**#:** `7`  
+**Name:** `com.google.android.youtube Activity State Change Responder`  
+**ID:** `857`  
+**Collision Handling:** `Run Both Together`  
+**Keep Device Awake:** `false`  
 **Help:**
 ```
 A task that responds to activity state changes for all the activities of the "com.google.android.youtube" package and is called by the "Activity State Change Controller" Task.
@@ -251,11 +251,11 @@ This task does not return anything.
 ##
 
 
-**#:** `8`
-**Name:** `Fullscreen Activity Transition Screen Brightness Controller`
-**ID:** `864`
-**Collision Handling:** `Run Both Together`
-**Keep Device Awake:** `false`
+**#:** `8`  
+**Name:** `Fullscreen Activity Transition Screen Brightness Controller`  
+**ID:** `864`  
+**Collision Handling:** `Run Both Together`  
+**Keep Device Awake:** `false`  
 **Help:**
 ```
 A helper task that can be used to set screen brightness if an activity enters or exits fullscreen mode. It ideally should be called by the "package_name Activity State Change Responder" Tasks.
@@ -283,11 +283,11 @@ Otherwise it will contain an appropriate exit code.
 ##
 
 
-**#:** `9`
-**Name:** `Anonymous (860)`
-**ID:** `860`
-**Collision Handling:** `Abort New Task`
-**Keep Device Awake:** `false`
+**#:** `9`  
+**Name:** `Anonymous (860)`  
+**ID:** `860`  
+**Collision Handling:** `Abort New Task`  
+**Keep Device Awake:** `false`  
 **Help:** `-`
 ##
 
