@@ -174,7 +174,7 @@ Download `Activity State Changes Tasker Project` latest release from [here](http
 
 ### Usage:
 
-1. Enable the `ActivityTrigger Activity Start Monitor`, `ActivityManager Activity Config Change Monitor`, `Activity State Change Controller Command Monitor` and `Reset Activity State Change Variables On Monitor Start` Profiles if not already action. You may optionally enable the `Custom Activity Start Monitor` instead of the `ActivityTrigger Activity Start Monitor` Profile if you found Activity resume logcat entries for your device. Do not enable both profiles together.
+1. Enable the `ActivityTrigger Activity Start Monitor`, `ActivityManager Activity Config Change Monitor`, `Activity State Change Controller Command Monitor` and `Reset Activity State Change Variables On Monitor Start` Profiles if not already action. You may optionally enable the `Custom Activity Start Monitor` Profile instead of the `ActivityTrigger Activity Start Monitor` Profile if you found Activity resume logcat entries for your device. Do not enable both profiles together.
 
 2. Optionally enable the use of non-root modes if you are a root user by disabling the `%use_root_mode` Variable Set action in the `Activity State Change Relay` and `Activity State Change Controller` Tasks or change their values from `1`.
 
@@ -186,9 +186,9 @@ Download `Activity State Changes Tasker Project` latest release from [here](http
 
 6. Create `project_name Activity State Change Responder` Tasks for each app you want to handle activity transitions for. The tasks may respond appropriately to activity transitions but must not perform long running operations since  `Activity State Change Controller` Task will not finish until the called tasks are finished to maintain order and any queued tasks for it task will also be in waiting. Any long running operations that do not require ordered execution can be run inside the called tasks in additional tasks with `%priority - 1` so that the called tasks can return before the additional tasks finish.
 
-7. If the default `ActivityTrigger Activity Start Monitor` with the `ActivityTrigger activityPauseTrigger` filter is never triggered, then find matching entries for `ActivityTrigger activityResumeTrigger` or other related pause/resume activity entries for your device in the logcat and update the profile. You may optionally find activity resume entries in your logcat that also contain the package and activity name and update the `Custom Activity Start Monitor` with them. In this case you also need to update the `Variable Search Replace` action in the `Custom Activity Start Monitor` Profile conditional actions in the `Activity State Change Relay` Task to extract the package name and activity name from the logcat entries and set them to  `%current_package_and_activity` in the format `package_name/activity_name`. 
+7. If the default `ActivityTrigger Activity Start Monitor` Profile with the `ActivityTrigger activityPauseTrigger` filter is never triggered, then find matching entries for `ActivityTrigger activityResumeTrigger` or other related pause/resume activity entries for your device in the logcat and update the profile. You may optionally find activity resume entries in your logcat that also contain the package and activity name and update the `Custom Activity Start Monitor` Profile with them. In this case you also need to update the `Variable Search Replace` action in the `Custom Activity Start Monitor` Profile conditional actions in the `Activity State Change Relay` Task to extract the package name and activity name from the logcat entries and set them to  `%current_package_and_activity` in the format `package_name/activity_name`. 
 
-8. If the default `ActivityManager Activity Config Change Monitor` is never triggered, try finding them in your logcat. If you can't, then contact the dev and ask him for help.
+8. If the default `ActivityManager Activity Config Change Monitor` Profile is never triggered, try finding them in your logcat. If you can't, then contact the dev and ask him for help.
 ##
 
 
