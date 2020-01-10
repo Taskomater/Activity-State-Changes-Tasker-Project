@@ -12,11 +12,12 @@
 - [Downloads](#Downloads)
 - [Install Instructions For Termux In Android](#Install-Instructions-For-Termux-In-Android)
 - [Usage](#Usage)
+- [Finding Device Specific Logcat Entries](#Finding-Device-Specific-Logcat-Entries)
 - [Current Features](#Current-Features)
 - [Planned Features](#Planned-Features)
 - [Issues](#Issues)
 - [Worthy of Note](#Worthy-of-Note)
-- [Finding Device Specific Logcat Entries](#Finding-Device-Specific-Logcat-Entries)
+- [Changelog](#Changelog)
 ##
 
 
@@ -81,7 +82,7 @@ Once it is found if the activity is fullscreen or not, then the current activity
 - `Custom Activity Start Monitor` is trigger by a `Logcat Entry` Event to detect `activity_start` activity_state_change. This should be used by users who found logcat entries for their device to detect if an activity is started or resumed that also contain the package and activity name. This is disabled by default and the values set are of the dev's device.
 - `ActivityManager Activity Config Change Monitor` is trigger by a `Logcat Entry` Event to detect `activity_config_change` activity_state_change. This is the default way to detect if an activity's config has changed. This is enabled by default.
 
-The 3 profiles above call the `Activity State Change Relay` Task that finds the currently opened package and activity for `activity_start` activity_state_change, either from `%lc_text` or with other ways mentioned earlier. Then it sets the `%ActivityStateChangeControllerCommand` variable with the `%current_package_and_activity` and `%activity_state_change` values which triggers the `Activity State Change Controller Command Monitor` Profile which calls the `Activity State Change Controller` Task to further process the activity state change and call any other required tasks for respected packages and activities. Note that either `ActivityTrigger Activity Start Monitor` or `Custom Activity Start Monitor` must be activated at the same time. If they are both activated, then this can cause duplication and result in fake transitions. 
+The 3 profiles above call the `Activity State Change Relay` Task which finds the currently opened package and activity for `activity_start` activity_state_change, either from `%lc_text` or with other ways mentioned earlier. Then it sets the `%ActivityStateChangeControllerCommand` variable with the `%current_package_and_activity` and `%activity_state_change` values which triggers the `Activity State Change Controller Command Monitor` Profile which calls the `Activity State Change Controller` Task to further process the activity state change and call any other required tasks for respected packages and activities. Note that either `ActivityTrigger Activity Start Monitor` or `Custom Activity Start Monitor` must be activated at the same time. If they are both activated, then this can cause duplication and result in fake transitions. The 3 profiles only become active when the `Display State` State is `On` and respective `Logcat Entry` Events are triggered. Activity state changes are unlikely to happen when display is off, and adding `Display State` context saves battery because  tasker doesn't need to monitor the Logcat when display is off. You may remove the `Display State` context if required.
 
 The `Activity State Change Controller` Task first checks if the current_package_and_activity passed is a valid package and activity name in the format `package_name/activity_name`. If it is then it checks if the current activity is in fullscreen mode with status bars hidden. Then it sets the `current_activity_state` depending on `activity_state_change` and `fullscreen_mode`. Then it checks if the a `package_name Activity State Change Responder` Task exists in the Tasker config for the `current_package_and_activity` or `previous_package_and_activity`. If either of those exists, then it calculates the `previous_activity_task_activity_transition_par` and `current_activity_task_activity_transition_par` depending on activity transitions in the transitions table defined in [Activity States And Transitions](#Activity-States-And-Transitions). Then it calls the `previous_package Activity State Change Responder` Task if it exists with the `previous_activity` as `%par1` and `previous_activity_task_activity_transition_par` as `%par2`. Then it calls the `current_package Activity State Change Responder` Task if it exists with the `current_activity` as `%par1` and `current_activity_task_activity_transition_par` as `%par2`. Those tasks may respond appropriately to activity transitions but must not perform long running operations since this task will not finish until the called tasks are finished to maintain order and any queued tasks for this task will also be in waiting. Any long running operations that do not require ordered execution can be run inside the called tasks in additional tasks with `%priority - 1` so that the called tasks can return before the additional tasks finish.
 
@@ -192,6 +193,22 @@ Download `Activity State Changes Tasker Project` latest release from [here](http
 ##
 
 
+### Finding Device Specific Logcat Entries
+
+There are a few ways to find device specific logcat entries for various things.
+
+- Using Tasker `Logcat Event` Profile mechanism.
+- Using the [Grab Timed And Filtered Logcat](https://github.com/agnostic-apollo/Tasker-Random-Stuff/tree/master/grab_timed_and_filtered_logcat) Task to grab a logcat for `x` seconds to a file. It also provides a way to filter tags/components and also provides a way to filter using regexes. A logcat file is much easier to read to see flow of things.
+- If you have root access, then run `logcat | grep -E 'activity|trigger|resume|start|stop|config change|systemuivisibility|statusbar'` in a root shell in termux and then switch to multi-window and then switch between activities to see logcat changes in real time. You can pass any string in a regex to `grep` to filter entries you want to monitor.
+- If you do not have root access, you may run the logcat command above over adb. If you are using windows, then `grep` command will not be available, install `cygwin` if required.
+
+To find activity resume entries, adding part of the package or activity name to the filter regex can be helful to narrow down important logcat entries. For LG G5 7.0, the activity resuming entries match the following format:
+```
+LGImageQualityEnhancementService: activityResuming: package_name/activity_name
+```
+##
+
+
 ### Current Features:
 
 - Detect activity transitions
@@ -223,19 +240,9 @@ Download `Activity State Changes Tasker Project` latest release from [here](http
 ##
 
 
-### Finding Device Specific Logcat Entries
+### Changelog:
 
-There are a few ways to find device specific logcat entries for various things.
+Check [CHANGELOG.md](CHANGELOG.md) file for the changelog.
 
-- Using Tasker `Logcat Event` Profile mechanism.
-- Using the [Grab Timed And Filtered Logcat](https://github.com/agnostic-apollo/Tasker-Random-Stuff/tree/master/grab_timed_and_filtered_logcat) Task to grab a logcat for `x` seconds to a file. It also provides a way to filter tags/components and also provides a way to filter using regexes. A logcat file is much easier to read to see flow of things.
-- If you have root access, then run `logcat | grep -E 'activity|trigger|resume|start|stop|config change|systemuivisibility|statusbar'` in a root shell in termux and then switch to multi-window and then switch between activities to see logcat changes in real time. You can pass any string in a regex to `grep` to filter entries you want to monitor.
-- If you do not have root access, you may run the logcat command above over adb. If you are using windows, then `grep` command will not be available, install `cygwin` if required.
-
-To find activity resume entries, adding part of the package or activity name to the filter regex can be helful to narrow down important logcat entries. For LG G5 7.0, the activity resuming entries match the following format:
-```
-LGImageQualityEnhancementService: activityResuming: package_name/activity_name
-```
 ##
-
 
