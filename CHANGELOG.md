@@ -13,12 +13,7 @@ All notable changes to this project will be documented in this file.
 
 ## [0.1.0] - 2020-01-09
 `-`
-
-
-
-[unreleased]: https://github.com/Taskomater/Activity-State-Changes-Tasker-Project/compare/v0.2.0...HEAD
-[0.2.0]: https://github.com/Taskomater/Activity-State-Changes-Tasker-Project/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/Taskomater/Activity-State-Changes-Tasker-Project/releases/tag/v0.1.0
+##
 
 
 
@@ -29,3 +24,10 @@ All notable changes to this project will be documented in this file.
 - **Removed** for now removed features.
 - **Fixed** for any bug fixes.
 - **Security** in case of vulnerabilities.
+##
+
+
+
+[unreleased]: https://github.com/Taskomater/Activity-State-Changes-Tasker-Project/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/Taskomater/Activity-State-Changes-Tasker-Project/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/Taskomater/Activity-State-Changes-Tasker-Project/releases/tag/v0.1.0
