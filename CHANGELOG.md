@@ -29,7 +29,3 @@ All notable changes to this project will be documented in this file.
 - **Removed** for now removed features.
 - **Fixed** for any bug fixes.
 - **Security** in case of vulnerabilities.
-
-
-
-

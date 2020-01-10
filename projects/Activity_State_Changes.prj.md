@@ -2,7 +2,7 @@
 
 ## Export Info:
 **Tasker Version:** `5.9`  
-**Timestamp:** `2020-01-09 06.12.33`  
+**Timestamp:** `2020-01-10 15.21.37`  
 
 
 
@@ -24,7 +24,7 @@
 
 
 ## Task Names:
-**Count:** `9`
+**Count:** `10`
 
 - *`Activity State Change Relay`*
 - *`Activity State Change Controller`*
@@ -34,6 +34,7 @@
 - *`com.android.chrome Activity State Change Responder`*
 - *`com.google.android.youtube Activity State Change Responder`*
 - *`Fullscreen Activity Transition Screen Brightness Controller`*
+- *`Get Activity_State_Changes Tasker Project Version Number`*
 - *`Anonymous (860)`*
 
 
@@ -90,7 +91,7 @@ A task that should be called whenever an activity is started or resumed again or
 
 This task should basically find the currently opened package and activity and set it to %current_package_and_activity in the format "package_name/activity_name" and also set %activity_state_change to "activity_start" or "activity_config_change". Both variables are set to "%ActivityStateChangeControllerCommand" separated by a newline so that the "Activity State Change Controller Command Monitor" Profile can be triggered and can pass it to "Activity State Change Controller" Task to further process the activity state change and call any other required tasks for respected packages and activities. The "Activity State Change Command Monitor" Profile will also run the command tasks in order with its own queue. If new command tasks were run with "%priority - 1", then different instances of the same tasks would have run in parallel or might not run at all depending on priorities of other tasks running in tasker. If incrementally decreasing priorities were used, then other tasks in tasker would not have run if base priority was too high. A custom queue design could have been used but it's not needed since we don't care about return values of command tasks. This design is used because if the Logcat entry passed to this task does not contain the package and activity names and the Tasker "GetCurrentAppAndActivity" function or dumpsys command is used to find them, then in that case if processing an entry fully takes too long then by the time the turn comes for queued tasks, the package and/or activity might have already changed for which those Logcat entries were generated for resulting in false activity transitions being calculated. It is still best to find Logcat entries for the device and use them instead of other ways because false activity transitions will still occur in cases when this task is slow or queued because of higher priority tasks running in tasker and packages and/or activities have already changed.
 
-By default this task is started by "ActivityTrigger Activity Start Monitor", "Custom Activity Start Monitor" and "ActivityManager Activity Config Change Monitor" Profiles. Note that either "ActivityTrigger Activity Start Monitor" or "Custom Activity Start Monitor" must be activated at the same time. If they are both activated, then this can cause duplication and result in fake transitions.
+By default this task is started by "ActivityTrigger Activity Start Monitor", "Custom Activity Start Monitor" and "ActivityManager Activity Config Change Monitor" Profiles when "Display State" State is "On" and respective "Logcat Entry" Events are triggered. Note that either "ActivityTrigger Activity Start Monitor" or "Custom Activity Start Monitor" must be activated at the same time. If they are both activated, then this can cause duplication and result in fake transitions.
 
 Check Activity State Changes Project docs to get more info on how this task should be called and what it should do.
 
@@ -284,6 +285,26 @@ Otherwise it will contain an appropriate exit code.
 
 
 **#:** `9`  
+**Name:** `Get Activity_State_Changes Tasker Project Version Number`  
+**ID:** `869`  
+**Collision Handling:** `Abort New Task`  
+**Keep Device Awake:** `false`  
+**Help:**
+```
+A task that returns Activity_State_Changes Tasker Project version number.
+
+
+This task does not take any parameters.
+
+Returns:
+"
+version_code
+"
+```
+##
+
+
+**#:** `10`  
 **Name:** `Anonymous (860)`  
 **ID:** `860`  
 **Collision Handling:** `Abort New Task`  
