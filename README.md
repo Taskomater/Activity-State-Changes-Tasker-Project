@@ -10,7 +10,7 @@
 - [Activity States And Transitions](#Activity-States-And-Transitions)
 - [Dependencies](#Dependencies)
 - [Downloads](#Downloads)
-- [Install Instructions For Termux In Android](#Install-Instructions-For-Termux-In-Android)
+- [Install Instructions For Tasker In Android](#Install-Instructions-For-Tasker-In-Android)
 - [Usage](#Usage)
 - [Finding Device Specific Logcat Entries](#Finding-Device-Specific-Logcat-Entries)
 - [Current Features](#Current-Features)
