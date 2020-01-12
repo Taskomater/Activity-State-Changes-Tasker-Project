@@ -1,8 +1,8 @@
 # Activity State Changes
 
 ## Export Info:
-**Tasker Version:** `5.9`  
-**Timestamp:** `2020-01-10 15.21.37`  
+**Tasker Version:** `5.9.1`  
+**Timestamp:** `2020-01-12 05.23.07`  
 
 
 
@@ -287,7 +287,7 @@ Otherwise it will contain an appropriate exit code.
 **#:** `9`  
 **Name:** `Get Activity_State_Changes Tasker Project Version Number`  
 **ID:** `869`  
-**Collision Handling:** `Abort New Task`  
+**Collision Handling:** `Run Both Together`  
 **Keep Device Awake:** `false`  
 **Help:**
 ```

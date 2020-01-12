@@ -1,13 +1,17 @@
-<TaskerData sr="" dvi="1" tv="5.9">
+<TaskerData sr="" dvi="1" tv="5.9.1">
 	<Profile sr="prof841" ve="2">
 		<cdate>1576896789133</cdate>
 		<clp>true</clp>
-		<edate>1578595589782</edate>
+		<edate>1578787811114</edate>
 		<flags>8</flags>
 		<id>841</id>
 		<mid0>839</mid0>
 		<nme>ActivityManager Activity Config Change Monitor</nme>
-		<Event sr="con0" ve="2">
+		<State sr="con0" ve="2">
+			<code>123</code>
+			<Int sr="arg0" val="1"/>
+		</State>
+		<Event sr="con1" ve="2">
 			<code>2085</code>
 			<pri>0</pri>
 			<Bundle sr="arg0">
@@ -21,10 +25,6 @@ The text that corresponds to the matched logcat entry&lt;/_array_net.dinglisch.a
 			<Str sr="arg1" ve="3">ActivityManager</Str>
 			<Str sr="arg2" ve="3">ActivityManager: Config change</Str>
 		</Event>
-		<State sr="con1" ve="2">
-			<code>123</code>
-			<Int sr="arg0" val="1"/>
-		</State>
 	</Profile>
 	<Profile sr="prof847" ve="2">
 		<cdate>1578266148686</cdate>
@@ -42,12 +42,16 @@ The text that corresponds to the matched logcat entry&lt;/_array_net.dinglisch.a
 	<Profile sr="prof855" ve="2">
 		<cdate>1578295763395</cdate>
 		<clp>true</clp>
-		<edate>1578650864528</edate>
+		<edate>1578787826285</edate>
 		<flags>8</flags>
 		<id>855</id>
 		<mid0>839</mid0>
 		<nme>ActivityTrigger Activity Start Monitor</nme>
-		<Event sr="con0" ve="2">
+		<State sr="con0" ve="2">
+			<code>123</code>
+			<Int sr="arg0" val="1"/>
+		</State>
+		<Event sr="con1" ve="2">
 			<code>2085</code>
 			<pri>0</pri>
 			<Bundle sr="arg0">
@@ -61,10 +65,6 @@ The text that corresponds to the matched logcat entry&lt;/_array_net.dinglisch.a
 			<Str sr="arg1" ve="3">ActivityTrigger</Str>
 			<Str sr="arg2" ve="3">ActivityTrigger activityPauseTrigger</Str>
 		</Event>
-		<State sr="con1" ve="2">
-			<code>123</code>
-			<Int sr="arg0" val="1"/>
-		</State>
 	</Profile>
 	<Profile sr="prof859" ve="2">
 		<cdate>1578341457397</cdate>
@@ -84,13 +84,18 @@ The text that corresponds to the matched logcat entry&lt;/_array_net.dinglisch.a
 	</Profile>
 	<Profile sr="prof863" ve="2">
 		<cdate>1578401192742</cdate>
-		<edate>1578650865867</edate>
+		<clp>true</clp>
+		<edate>1578787826880</edate>
 		<flags>8</flags>
 		<id>863</id>
 		<limit>true</limit>
 		<mid0>839</mid0>
 		<nme>Custom Activity Start Monitor</nme>
-		<Event sr="con0" ve="2">
+		<State sr="con0" ve="2">
+			<code>123</code>
+			<Int sr="arg0" val="1"/>
+		</State>
+		<Event sr="con1" ve="2">
 			<code>2085</code>
 			<pri>0</pri>
 			<Bundle sr="arg0">
@@ -104,10 +109,6 @@ The text that corresponds to the matched logcat entry&lt;/_array_net.dinglisch.a
 			<Str sr="arg1" ve="3">LGImageQualityEnhancementService</Str>
 			<Str sr="arg2" ve="3">activityResuming:</Str>
 		</Event>
-		<State sr="con1" ve="2">
-			<code>123</code>
-			<Int sr="arg0" val="1"/>
-		</State>
 	</Profile>
 	<Project sr="proj0" ve="2">
 		<cdate>1578339897867</cdate>
@@ -117,7 +118,7 @@ The text that corresponds to the matched logcat entry&lt;/_array_net.dinglisch.a
 	</Project>
 	<Task sr="task839">
 		<cdate>1576882993943</cdate>
-		<edate>1578651411713</edate>
+		<edate>1578760085239</edate>
 		<id>839</id>
 		<nme>Activity State Change Relay</nme>
 		<pri>6</pri>
@@ -448,6 +449,7 @@ Value Set:
 		<edate>1578640088625</edate>
 		<id>852</id>
 		<nme>Reset Activity State Change Variables</nme>
+		<pri>6</pri>
 		<Action sr="act0" ve="7">
 			<code>300</code>
 			<label>A task that resets Activity States Changes Project variables.
@@ -2881,9 +2883,10 @@ Otherwise it will contain an appropriate exit code.</label>
 	</Task>
 	<Task sr="task869">
 		<cdate>1575359655233</cdate>
-		<edate>1578650105708</edate>
+		<edate>1578787822122</edate>
 		<id>869</id>
 		<nme>Get Activity_State_Changes Tasker Project Version Number</nme>
+		<rty>2</rty>
 		<Action sr="act0" ve="7">
 			<code>300</code>
 			<label>A task that returns Activity_State_Changes Tasker Project version number.

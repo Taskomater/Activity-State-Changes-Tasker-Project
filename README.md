@@ -4,7 +4,7 @@
 ##
 
 
-### Contents:
+### Contents
 - [Project Details](#Project-Details)
 - [How Project Works](#How-Project-Works)
 - [Activity States And Transitions](#Activity-States-And-Transitions)
@@ -16,12 +16,14 @@
 - [Current Features](#Current-Features)
 - [Planned Features](#Planned-Features)
 - [Issues](#Issues)
-- [Worthy of Note](#Worthy-of-Note)
+- [Worthy Of Note](#Worthy-Of-Note)
+- [FAQs And FUQs](#FAQs-And-FUQs)
 - [Changelog](#Changelog)
+- [Contributions](#Contributions)
 ##
 
 
-### Project Details:
+### Project Details
 
 Each android app has a package name which is a unique name that allows android to differentiate between different apps even if they have the same name. For example, the package name for Tasker is `net.dinglisch.android.taskerm`.  Each app can contain different activities inside it which are basically views or screens. For example Tasker has the homescreen activity, the settings activity, task edit activity and so on. 
 Activities can be of the following types:
@@ -55,7 +57,7 @@ The `ActivityManager: Displayed` will not be logged for activities which are ret
 The `ActivityTrigger: ActivityTrigger activityPauseTrigger` can be used to reliable detect all activity transitions but since the entry itself does not contain the package and activity name, other ways need to be used to detect what activity is currently in focus. But this creates lots of problems because if the `Logcat Entry` Profile entry task takes too long to process an entry, then by the time the turn comes for queued tasks, the package and/or activity might have already changed for which those Logcat entries were generated for, resulting in false activity transitions being calculated.
 
 Currently two ways are used to detect which activity is currently in focus:
-- For non-root users the `GetCurrentAppAndActivity` function of the `Tasker Function` action is used, but the value returned by it is sometimes that of a previous activity since Tasker does not receive/calculate the new value fast enough and a wait action is required of `0.5-1s` before running it. The exact time of the `Wait` action at runtime will vary depending on other same priority tasks running in tasker or the device load itself and may even vary for different devices, and so activity transitions may not always be accurate.
+- For non-root users the `GetCurrentAppAndActivity` function of the `Tasker Function` action is used, but the value returned by it is sometimes that of a previous activity since Tasker does not receive/calculate the new value fast enough and a wait action is required of `0.5-1s` before running it. The exact time of the `Wait` action at runtime will vary depending on other same priority tasks running in tasker or the device load itself and may even vary for different devices, and so activity transitions may not always be accurate. The `Tasker Settings` -> `Monitor` -> `App Check Method` if set to `App Usage Stats` may give better results than `Accessibility`.
 - For root users, the `mFocusedActivity` value is extracted from the `dumpsys activity activities` command. This ideally should work for almost every device if not all. This is relatively more reliable for getting the current package and activity value accurately since its updated fast enough and a `Wait` action is not required. The full command to extract `GetCurrentAppAndActivity` value is `dumpsys activity activities | grep mFocusedActivity | sed -E 's/.*ActivityRecord\{[^ ]+ [^ ]+ ([^ ]+) [^ ]+\}.*/\1/'`.
 
 But with both these methods false activity transitions will still occur in cases when the entry task is slow or queued because of higher priority tasks running in tasker and packages and/or activities have already changed. It is best to find device specific Logcat entries for all activity resumes which also contain the package and activity name in the format `package_name/activity_name`. These should normally exist in all devices but will vary depending on device manufacturer and android version. Check the [Finding Device Specific Logcat Entries](###Finding-Device-Specific-Logcat-Entries) section for more info on how to find them.
@@ -73,7 +75,7 @@ The details for fullscreen and immersive modes can be found [here](https://devel
 
 Once it is found if the activity is fullscreen or not, then the current activity state is calculated. After this, if the current or previous activity's package name responder tasks are found in the tasker config, then activity transitions are calculated from previous and current activity states and passed to the respective tasks.
 
-### How Project Works:
+### How Project Works
 
 
 **Logcat Entry Profiles**:
@@ -154,26 +156,26 @@ If previous_activity!=current_activity:
 ##
 
 
-### Dependencies:
+### Dependencies
 
-- No specific dependencies other than requires Tasker to be granted `android.permission.READ_LOGS`. Either grant it over adb manually using `pm grant net.dinglisch.android.taskerm android.permission.READ_LOGS` command or use the script in [Tasker Package Utils](https://github.com/Taskomater/Tasker-Package-Utils) project which has a few more features.
+- No specific dependencies other than requires Tasker to be granted `android.permission.READ_LOGS`. Either grant it over adb manually using `pm grant net.dinglisch.android.taskerm android.permission.READ_LOGS` command or use the script in [tasker_package_utils](https://github.com/Taskomater/tasker_package_utils) project which has a few more features.
 ##
 
 
-### Downloads:
+### Downloads
 
 Download `Activity State Changes Tasker Project` latest release from [here](https://github.com/Taskomater/Activity-State-Changes-Tasker-Project/releases).
 ##
 
 
-### Install Instructions For Tasker In Android:
+### Install Instructions For Tasker In Android
 
-1. Import `Activity_State_Changes.prj.xml` Project file into Tasker.
+1. Import `projects/Activity_State_Changes.prj.xml` Project file into Tasker.
 
 ##
 
 
-### Usage:
+### Usage
 
 1. Enable the `ActivityTrigger Activity Start Monitor`, `ActivityManager Activity Config Change Monitor`, `Activity State Change Controller Command Monitor` and `Reset Activity State Change Variables On Monitor Start` Profiles if not already action. You may optionally enable the `Custom Activity Start Monitor` Profile instead of the `ActivityTrigger Activity Start Monitor` Profile if you found Activity resume logcat entries for your device. Do not enable both profiles together.
 
@@ -209,7 +211,7 @@ LGImageQualityEnhancementService: activityResuming: package_name/activity_name
 ##
 
 
-### Current Features:
+### Current Features
 
 - Detect activity transitions
 - Detect if activities enter or leave fullscreen mode
@@ -217,32 +219,43 @@ LGImageQualityEnhancementService: activityResuming: package_name/activity_name
 ##
 
 
-### Planned Features:
+### Planned Features
 
-- Not thought of yet.
+- Optimizations to reduce tasks execution times.
 ##
 
 
-### Issues:
+### Issues
 
 - Some `package_name/activity_name` might be considered invalid. Currently the hyphen `-` character in activities is considered invalid by the `\p{javaJavaIdentifierPart}` character class of the validation regex for some unknown reason on the devs device. The regex may be changed in future.
 
 ##
 
 
-### Worthy of Note:
+### Worthy Of Note
 
 - The activity name of activities defined in the `AndroidManifest.xml` of apps may start with a dot, which implies that the package name should automatically be prepended to their name. Depending on the method used to detect the current package and activity, the activity name may not be prepended with the package name and may start with a dot instead. So it is best to use `~` matches instead of `eq` conditional statements in the `project_name Activity State Change Responder` Tasks.
 
 - You may increase the priority of `Logcat Entry` Profiles to a number higher than the default `5` to make them run as soon as they are trigerred to store the value of the current package and activity if other lower priority tasks are running in Tasker. But note that using `Wait` actions will prevent other tasks from executing until the profile entry tasks are complete and may create sluggish behaviour.
 
-- The dumpsys commands are by default run in `Run Shell` actions with the root toggle enabled. Opening a root shell takes a tiny bit longer than normal non-root shells. If Tasker is installed as a system privileged app and is granted `android.permission.DUMP`, then root shell is not required and the root toggle may be disabled to slightly increase performance. You may use the script in [Tasker Package Utils](https://github.com/Taskomater/Tasker-Package-Utils) project to automatically install tasker as a system privileged app.
+- The dumpsys commands are by default run in `Run Shell` actions with the root toggle enabled. Opening a root shell takes a tiny bit longer than normal non-root shells. If Tasker is installed as a system privileged app and is granted `android.permission.DUMP`, then root shell is not required and the root toggle may be disabled to slightly increase performance. You may use the script in [Tasker Package Utils](https://github.com/Taskomater/tasker_package_utils) project to automatically install tasker as a system privileged app.
 ##
 
 
-### Changelog:
+### FAQs And FUQs
 
-Check [CHANGELOG.md](CHANGELOG.md) file for the changelog.
+Check [FAQs_And_FUQs.md](FAQs_And_FUQs.md) file for the **Frequently Asked Questions(FAQs)** and **Frequently Unasked Questions(FUQs)**.
+##
 
+### Changelog
+
+Check [CHANGELOG.md](CHANGELOG.md) file for the **Changelog**.
+
+##
+
+
+### Contributions
+
+`-`
 ##
 
