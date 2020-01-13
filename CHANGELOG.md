@@ -20,7 +20,7 @@ All notable changes to this project will be documented in this file.
 `-`
 
 
-## [0.2.0] - 2020-01-12
+## [0.2.0] - 2020-01-13
 
 ### Added
 - Added `Display State` State is `On` to `*Activity Start Monitor` and `*Config Change Monitor` Profiles to save battery when display is off.

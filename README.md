@@ -1,6 +1,6 @@
 # Activity State Changes Tasker Project
 
-`Activity State Changes Tasker Project` for android provides a way to detect android app activity state changes like activity changes in the same app or between different ones or if an activity enters or exits the fullscreen mode. This majorly relies on logcat entries detected using the Tasker `Logcat Entry` Profile and requires Tasker to be granted `android.permission.READ_LOGS`.
+`Activity State Changes Tasker Project` for android provides a way to detect android app activity state changes like activity changes in the same app or between different ones or if an activity enters or exits the fullscreen mode using the [Tasker App]. This majorly relies on logcat entries detected using the Tasker `Logcat Entry` Profile and requires Tasker to be granted `android.permission.READ_LOGS`.
 ##
 
 
@@ -8,6 +8,7 @@
 - [Project Details](#Project-Details)
 - [How Project Works](#How-Project-Works)
 - [Activity States And Transitions](#Activity-States-And-Transitions)
+- [Compatibility](#Compatibility)
 - [Dependencies](#Dependencies)
 - [Downloads](#Downloads)
 - [Install Instructions For Tasker In Android](#Install-Instructions-For-Tasker-In-Android)
@@ -156,15 +157,21 @@ If previous_activity!=current_activity:
 ##
 
 
+### Compatibility
+
+- Android using [Tasker App].
+##
+
+
 ### Dependencies
 
-- No specific dependencies other than requires Tasker to be granted `android.permission.READ_LOGS`. Either grant it over adb manually using `pm grant net.dinglisch.android.taskerm android.permission.READ_LOGS` command or use the script in [tasker_package_utils](https://github.com/Taskomater/tasker_package_utils) project which has a few more features.
+- No specific dependencies other than requires Tasker to be granted `android.permission.READ_LOGS`. Either grant it over adb manually using `pm grant net.dinglisch.android.taskerm android.permission.READ_LOGS` command or use the script in [tasker_package_utils](https://github.com/Taskomater/tasker_package_utils) project which has a few more features. Root users are automatically granted permissions by Tasker if required.
 ##
 
 
 ### Downloads
 
-Download `Activity State Changes Tasker Project` latest release from [here](https://github.com/Taskomater/Activity-State-Changes-Tasker-Project/releases).
+- [GitHub releases](https://github.com/Taskomater/Activity-State-Changes-Tasker-Project/releases).
 ##
 
 
@@ -177,17 +184,17 @@ Download `Activity State Changes Tasker Project` latest release from [here](http
 
 ### Usage
 
-1. Enable the `ActivityTrigger Activity Start Monitor`, `ActivityManager Activity Config Change Monitor`, `Activity State Change Controller Command Monitor` and `Reset Activity State Change Variables On Monitor Start` Profiles if not already action. You may optionally enable the `Custom Activity Start Monitor` Profile instead of the `ActivityTrigger Activity Start Monitor` Profile if you found Activity resume logcat entries for your device. Do not enable both profiles together.
+1. Enable the `ActivityTrigger Activity Start Monitor`, `ActivityManager Activity Config Change Monitor`, `Activity State Change Controller Command Monitor` and `Reset Activity State Change Variables On Monitor Start` Profiles if not already enabled. You may optionally enable the `Custom Activity Start Monitor` Profile instead of the `ActivityTrigger Activity Start Monitor` Profile if you found Activity resume logcat entries for your device. Do not enable both profiles together.
 
 2. Optionally enable the use of non-root modes if you are a root user by disabling the `%use_root_mode` Variable Set action in the `Activity State Change Relay` and `Activity State Change Controller` Tasks or change their values from `1`.
 
 3. Enable the `%lc_text` Flash action of the  `Activity State Change Relay` Task, the `%enable_debugging` Variable Set action of the `Activity State Change Controller` Task and optionally the `%action\n%%activity_transition` action of the `project_name Activity State Change Responder` Tasks. This should normally give you enough info on what is being run. The Flash actions will of course not be synchronized with what is being run.
 
-4. Change the `Wait` action time in the `Activity State Change Relay` Task for the  `ActivityTrigger Activity Start Monitor` Profile conditional statement if you are using non-root mode.
+4. Change the `Wait` action time in the `Activity State Change Relay` Task for the  `ActivityTrigger Activity Start Monitor` Profile conditional statement if you are using non-root mode. Also use the  `App Usage Stats` mode for `Tasker Settings` -> `Monitor` -> `App Check Method` for possibly better results.
 
 5. If the fullscreen mode is not always being detected correctly, try to change the `Wait` action time in the `Wait For User To Hide Status Bar By Tapping Screen*` section of the `Activity State Change Controller` Task. Do not forget to tap the screen once to hide the status bar as soon as you enter a fullscreen activity for which you want to detect fullscreen mode. You may optionally not tap it to prevent the respective `project_name Activity State Change Responder` Task from running the fullscreen actions you defined.
 
-6. Create `project_name Activity State Change Responder` Tasks for each app you want to handle activity transitions for. The tasks may respond appropriately to activity transitions but must not perform long running operations since  `Activity State Change Controller` Task will not finish until the called tasks are finished to maintain order and any queued tasks for it task will also be in waiting. Any long running operations that do not require ordered execution can be run inside the called tasks in additional tasks with `%priority - 1` so that the called tasks can return before the additional tasks finish.
+6. Create `project_name Activity State Change Responder` Tasks for each app you want to handle activity transitions for. The tasks may respond appropriately to activity transitions but must not perform long running operations since  `Activity State Change Controller` Task will not finish until the called tasks are finished to maintain order and any queued tasks for it will also be in waiting. Any long running operations that do not require ordered execution can be run inside the called tasks in additional tasks with `%priority - 1` so that the called tasks can return before the additional tasks finish.
 
 7. If the default `ActivityTrigger Activity Start Monitor` Profile with the `ActivityTrigger activityPauseTrigger` filter is never triggered, then find matching entries for `ActivityTrigger activityResumeTrigger` or other related pause/resume activity entries for your device in the logcat and update the profile. You may optionally find activity resume entries in your logcat that also contain the package and activity name and update the `Custom Activity Start Monitor` Profile with them. In this case you also need to update the `Variable Search Replace` action in the `Custom Activity Start Monitor` Profile conditional actions in the `Activity State Change Relay` Task to extract the package name and activity name from the logcat entries and set them to  `%current_package_and_activity` in the format `package_name/activity_name`. 
 
@@ -204,7 +211,7 @@ There are a few ways to find device specific logcat entries for various things.
 - If you have root access, then run `logcat | grep -E 'activity|trigger|resume|start|stop|config change|systemuivisibility|statusbar'` in a root shell in termux and then switch to multi-window and then switch between activities to see logcat changes in real time. You can pass any string in a regex to `grep` to filter entries you want to monitor.
 - If you do not have root access, you may run the logcat command above over adb. If you are using windows, then `grep` command will not be available, install `cygwin` if required.
 
-To find activity resume entries, adding part of the package or activity name to the filter regex can be helful to narrow down important logcat entries. For LG G5 7.0, the activity resuming entries match the following format:
+To find activity resume entries, adding part of the package or activity name to the filter regex can be helpful to narrow down important logcat entries. For LG G5 7.0, the activity resuming entries match the following format:
 ```
 LGImageQualityEnhancementService: activityResuming: package_name/activity_name
 ```
@@ -238,7 +245,7 @@ LGImageQualityEnhancementService: activityResuming: package_name/activity_name
 
 - You may increase the priority of `Logcat Entry` Profiles to a number higher than the default `5` to make them run as soon as they are trigerred to store the value of the current package and activity if other lower priority tasks are running in Tasker. But note that using `Wait` actions will prevent other tasks from executing until the profile entry tasks are complete and may create sluggish behaviour.
 
-- The dumpsys commands are by default run in `Run Shell` actions with the root toggle enabled. Opening a root shell takes a tiny bit longer than normal non-root shells. If Tasker is installed as a system privileged app and is granted `android.permission.DUMP`, then root shell is not required and the root toggle may be disabled to slightly increase performance. You may use the script in [Tasker Package Utils](https://github.com/Taskomater/tasker_package_utils) project to automatically install tasker as a system privileged app.
+- The dumpsys commands are by default run in `Run Shell` actions with the root toggle enabled. Opening a root shell takes a tiny bit longer than normal non-root shells. If Tasker is installed as a system privileged app and is granted `android.permission.DUMP`, then root shell is not required and the root toggle may be disabled to slightly increase performance. You may use the script in [Tasker Package Utils](https://github.com/Taskomater/tasker_package_utils) project to automatically install Tasker as a system privileged app.
 ##
 
 
@@ -259,3 +266,5 @@ Check [CHANGELOG.md](CHANGELOG.md) file for the **Changelog**.
 `-`
 ##
 
+
+[Tasker App]: https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm

@@ -2,7 +2,7 @@
 
 ## Export Info:
 **Tasker Version:** `5.9.1`  
-**Timestamp:** `2020-01-12 05.23.07`  
+**Timestamp:** `2020-01-13 05.28.11`  
 
 
 
@@ -110,7 +110,18 @@ This task does not take any parameters or return anything.
 ```
 A task is called by the "Activity State Change Controller Command Monitor" Profile when the %ActivityStateChangeControllerCommand variable is set.
 
-This task first checks if the current_package_and_activity passed is a valid package and activity name in the format "package_name/activity_name". If it is then it checks if the current activity is in fullscreen mode with status bars hidden either by using the dumpsys command's "mTopIsFullscreen" value if root mode is enabled or from the last "*StatusBar: setSystemUiVisibility" logcat entry's "newVal" bit flags. Then it sets the current_activity_state depending on activity_state_change and fullscreen mode. Then it checks if the a "package_name Activity State Change Responder" Task exists in the Tasker config for the current_package_and_activity or previous_package_and_activity. If either of those exists, then it calculates the previous_activity_task_activity_transition_par and current_activity_task_activity_transition_par depending on activity transitions in the transitions table. Then it calls the "previous_package Activity State Change Responder" Task if it exists with the previous_activity as %par1 and previous_activity_task_activity_transition_par as %par2. Then it calls the "current_package Activity State Change Responder" Task if it exists with the current_activity as %par1 and current_activity_task_activity_transition_par as %par2. Those tasks may respond appropriately to activity transitions but must not perform long running operations since this task will not finish until the called tasks are finished to maintain order and any queued tasks for this task will also be in waiting. Any long running operations that do not require ordered execution can be run inside the called tasks in additional tasks with "%priority - 1" so that the called tasks can return before the additional tasks finish.
+This task first checks if the current_package_and_activity passed is a valid package and activity name in the format "package_name/activity_name".
+
+Then it checks if the current activity is in fullscreen mode with status bars hidden either by using the dumpsys command's "mTopIsFullscreen" value if root mode is enabled or from the last "*StatusBar: setSystemUiVisibility" logcat entry's "newVal" bit flags. If no entries are found in the logcat for "setSystemUiVisibility", then it is automatically assumed that activity is in non fullscreeen mode.
+Then it sets the current_activity_state depending on activity_state_change and fullscreen mode.
+
+Then it checks if the a "package_name Activity State Change Responder" Task exists in the Tasker config for the current_package_and_activity or previous_package_and_activity. If either of those exists, then it calculates the previous_activity_task_activity_transition_par and current_activity_task_activity_transition_par depending on activity transitions in the transitions table.
+
+Then it calls the "previous_package Activity State Change Responder" Task if it exists with the previous_activity as %par1 and previous_activity_task_activity_transition_par as %par2.
+
+Then it calls the "current_package Activity State Change Responder" Task if it exists with the current_activity as %par1 and current_activity_task_activity_transition_par as %par2.
+
+"*Responder" tasks may respond appropriately to activity transitions but must not perform long running operations since this task will not finish until the called tasks are finished to maintain order and any queued tasks for this task will also be in waiting. Any long running operations that do not require ordered execution can be run inside the called tasks in additional tasks with "%priority - 1" so that the called tasks can return before the additional tasks finish.
 
 Check Activity State Changes Project docs to get more info on how this task is called and what it does.
 
